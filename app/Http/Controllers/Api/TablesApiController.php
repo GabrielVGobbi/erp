@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BranchesResource;
 use App\Http\Resources\OrganizationsResource;
+use App\Models\Branch;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -38,6 +40,20 @@ class TablesApiController extends Controller
         $organizations = $this->limit == 'all' ? $organizations->get() : $organizations->paginate($this->limit);
 
         return OrganizationsResource::collection($organizations);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function branches()
+    {
+        $branches = new Branch();
+
+        $branches = $branches->with('organization')->orderBy($this->sort, $this->order);
+
+        $branches = $this->limit == 'all' ? $branches->get() : $branches->paginate($this->limit);
+
+        return BranchesResource::collection($branches);
     }
 
     /**

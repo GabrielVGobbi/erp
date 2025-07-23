@@ -11,112 +11,143 @@ class GenerateCrud extends Command
     /**
      * Nome do comando Artisan: gera o CRUD completo
      * Opções:
-     *  --requests  Gera FormRequest de Store e Update em pasta conforme nome
-     *  --observer  Gera Observer e registra no AppServiceProvider
+     *  --requests   Gera FormRequest de Store e Update em pasta conforme nome
+     *  --observer   Gera Observer e registra no AppServiceProvider
+     *  --resources  Gera API Resources (Resource e ResourceCollection) em pasta conforme nome
      */
-    protected $signature = 'make:crud {name} {--requests} {--observer}';
-    protected $description = 'Gera um CRUD completo para um modelo, incluindo Requests e Observers';
+    protected $signature = 'make:crud {name} {--requests} {--observer} {--resources}';
+    protected $description = 'Gera um CRUD completo para um modelo, incluindo Requests, Observer e API Resources';
 
-     public function handle()
+    public function handle()
     {
         $inputName = $this->argument('name');
-        $segments = array_map('ucfirst', explode('/', $inputName));
-        $modelName = end($segments);
-        $variable = lcfirst($modelName);
+        $nameSegments = array_map('ucfirst', explode('/', $inputName));
+        $name = end($nameSegments);
+        $variable = lcfirst($name);
+        $nameSingular = __singular($name);
+        $variableSingular = lcfirst($nameSingular);
+        $namePlural = __plural($name);
+        $variablePlural = lcfirst($namePlural);
 
-        $singular = __singular($modelName);
-        $singVar = lcfirst($singular);
-        $plural = __plural($modelName);
-        $varPlural = lcfirst($plural);
+        $generateRequests  = $this->option('requests');
+        $generateObserver  = $this->option('observer');
+        $generateResources = $this->option('resources');
 
-        $makeRequests = $this->option('requests');
-        $makeObserver = $this->option('observer');
-
-        $this->info("Iniciando CRUD para: {$singular}");
+        $this->info("Gerando CRUD para o modelo: {$nameSingular}");
 
         // 1. Model, Migration e Factory
         Artisan::call("make:model {$inputName} -mf");
-        $this->info("Model, migration e factory criados para {$singular}.");
+        $this->info("Model, migration e factory criados para {$nameSingular}.");
 
         // 2. Seeder
-        Artisan::call("make:seeder {$singular}Seeder");
-        $this->info("Seeder criado: {$singular}Seeder.");
+        Artisan::call("make:seeder {$nameSingular}Seeder");
+        $this->info("Seeder criado para {$nameSingular}.");
 
-        // 3. FormRequests
-        $requestPath = implode('/', $segments);
-        $requestNs = implode('\\', $segments);
-        if ($makeRequests) {
-            Artisan::call("make:request {$requestPath}/Store{$singular}Request");
-            Artisan::call("make:request {$requestPath}/Update{$singular}Request");
-            $this->info("FormRequests criados em App/Http/Requests/{$requestPath}/");
+        // 3. Requests em subpasta conforme input
+        $requestPath      = implode('/', $nameSegments);
+        $requestNamespace = implode('\\', $nameSegments);
+        if ($generateRequests) {
+            Artisan::call("make:request {$requestPath}/Store{$nameSingular}Request");
+            Artisan::call("make:request {$requestPath}/Update{$nameSingular}Request");
+            $this->info("FormRequests criados em App/Http/Requests/{$requestPath}.");
         }
 
-        // 4. Controller
-        $this->createController($segments, $singular, $singVar, $makeRequests, $requestNs);
-
-        // 5. Observer
-        if ($makeObserver) {
-            $this->createObserver($singular);
+        // 4. API Resources em subpasta conforme input
+        if ($generateResources) {
+            $resourcePath      = implode('/', $nameSegments);
+            $resourceNamespace = implode('\\', $nameSegments);
+            Artisan::call("make:resource {$resourcePath}/{$name}Resource");
+            Artisan::call("make:resource {$resourcePath}/{$name}Resource --collection");
+            $this->info("API Resources criados em App/Http/Resources/{$resourcePath}.");
         }
 
-        // 6. Route
-        $this->createRoute($varPlural, $singular);
+        // 5. Controller
+        $this->createController(
+            $nameSegments,
+            $nameSingular,
+            $variableSingular,
+            $generateRequests,
+            $requestNamespace,
+            $generateResources,
+            $resourceNamespace
+        );
 
-        // 7. Views
-        $this->createViews($singular, $singVar);
+        // 6. Observer
+        if ($generateObserver) {
+            $this->createObserver($nameSingular);
+        }
 
-        $this->info("CRUD completo gerado para {$singular}.");
+        // 7. Routes
+        $this->createRoute($variablePlural, $nameSingular);
+
+        // 8. Views
+        //$this->createViews($nameSingular, $variableSingular);
+
+        $this->info("CRUD completo gerado com sucesso para {$nameSingular}!");
     }
 
-    private function createController(array $segments, $name, $variable, $withRequests = false, $reqNs = '')
-    {
-        $filesystem = new Filesystem();
-        $stubPath = base_path('stubs/controller.stub');
-        $subPath = implode('/', $segments);
+    private function createController(
+        array $segments,
+        $name,
+        $variable,
+        $withRequests = false,
+        $reqNs = '',
+        $withResources = false,
+        $resNs = ''
+    ) {
+        $filesystem  = new Filesystem();
+        $stubPath    = base_path('stubs/controller.stub');
+        $subPath     = implode('/', $segments);
         $namespaceSub = implode('\\', $segments);
-        $namespace = 'App\\Http\\Controllers' . ($namespaceSub ? '\\' . $namespaceSub : '');
-        $controllerPath = app_path("Http/Controllers/{$name}Controller.php");
+        $namespace    = 'App\\Http\\Controllers' . ($namespaceSub ? '\\' . $namespaceSub : '');
+        $controllerDir = app_path("Http/Controllers");
+        $controllerPath = "{$controllerDir}/{$name}Controller.php";
 
-        if (! $filesystem->exists($stubPath)) {
+        if (!$filesystem->exists($stubPath)) {
             return $this->error("Stub do Controller não encontrado em {$stubPath}.");
         }
         $stub = $filesystem->get($stubPath);
 
+        // Requests
         $rqBase = $reqNs ? "App\\Http\\Requests\\{$reqNs}\\" : '';
-        $storeRequest = $withRequests
-            ? $rqBase . "Store{$name}Request"
-            : "Illuminate\\Http\\Request";
-        $updateRequest = $withRequests
-            ? $rqBase . "Update{$name}Request"
-            : "Illuminate\\Http\\Request";
+        $storeRequest  = $withRequests ? $rqBase."Store{$name}Request" : "Illuminate\\Http\\Request";
+        $updateRequest = $withRequests ? $rqBase."Update{$name}Request" : "Illuminate\\Http\\Request";
 
-        $namePlural = __plural($name);
-        $variablePlural = __plural(lcfirst($name));
+        // Resources
+        $resBase = $resNs ? "App\\Http\\Resources\\{$resNs}\\" : '';
+        $resource       = $withResources ? $resBase."{$name}Resource" : '';
+        $resourceColl   = $withResources ? $resBase."{$name}ResourceCollection" : '';
+
+        $namePlural      = __plural($name);
+        $variablePlural  = __plural(lcfirst($name));
 
         $replacements = [
-            'namespace'        => $namespace,
-            'namespacedModel'  => "App\\Models\\{$name}",
-            'useStoreRequest'  => $storeRequest,
-            'useUpdateRequest' => $updateRequest,
-            'class'            => "{$name}Controller",
-            'model'            => $name,
-            'variable'         => $variable,
-            'modelPlural'      => $namePlural,
-            'variablePlural'   => $variablePlural,
+            'namespace'            => $namespace,
+            'namespacedModel'      => "App\\Models\\{$name}",
+            'useStoreRequest'      => $storeRequest,
+            'useUpdateRequest'     => $updateRequest,
+            'useResource'          => $resource,
+            'useResourceCollection'=> $resourceColl,
+            'class'                => "{$name}Controller",
+            'model'                => $name,
+            'variable'             => $variable,
+            'modelPlural'          => $namePlural,
+            'variablePlural'       => $variablePlural,
         ];
 
         foreach ($replacements as $key => $val) {
-            $stub = preg_replace('/\{\{\s*' . preg_quote($key, '/') . '\s*\}\}/', $val, $stub);
+            $stub = preg_replace(
+                '/\{\{\s*' . preg_quote($key, '/') . '\s*\}\}/',
+                $val,
+                $stub
+            );
         }
-
         $stub = preg_replace('/;{2,}/', ';', $stub);
 
-        // Certifica diretório existe
-        $dir = dirname($controllerPath);
-        if (! $filesystem->exists($dir)) {
-            $filesystem->makeDirectory($dir, 0755, true);
+        // Certifica diretório
+        if (! $filesystem->exists($controllerDir)) {
+            $filesystem->makeDirectory($controllerDir, 0755, true);
         }
-
         $filesystem->put($controllerPath, $stub);
         $this->info("Controller {$name}Controller criado em {$controllerPath}.");
     }
@@ -127,11 +158,10 @@ class GenerateCrud extends Command
         $this->info("Observer {$name}Observer criado.");
 
         $providerPath = app_path('Providers/AppServiceProvider.php');
-        $filesystem = new Filesystem();
-        $content = $filesystem->get($providerPath);
+        $filesystem   = new Filesystem();
+        $content      = $filesystem->get($providerPath);
 
         $registerLine = "\\App\\Models\\{$name}::observe(\\App\\Observers\\{$name}Observer::class);";
-
         if (strpos($content, $registerLine) === false) {
             $content = preg_replace(
                 '/public function boot\(\)\s*\{/',
@@ -148,7 +178,7 @@ class GenerateCrud extends Command
     {
         $routeFile = base_path('routes/web.php');
         $filesystem = new Filesystem();
-        $content = $filesystem->get($routeFile);
+        $content   = $filesystem->get($routeFile);
 
         $resourceRoute = "Route::resource('{$route}', '{$controller}Controller');";
         if (strpos($content, $resourceRoute) === false) {
@@ -160,7 +190,7 @@ class GenerateCrud extends Command
     private function createViews($name, $variable)
     {
         $filesystem = new Filesystem();
-        $viewDir = resource_path("views/{$variable}");
+        $viewDir    = resource_path("views/{$variable}");
         if (! $filesystem->exists($viewDir)) {
             $filesystem->makeDirectory($viewDir, 0755, true);
             $this->info("Diretório de views criado em: {$viewDir}");
@@ -183,7 +213,7 @@ class GenerateCrud extends Command
                 'modelPlural'     => __plural($name),
                 'variablePlural'  => __plural($variable),
             ] as $key => $val) {
-                $stub = preg_replace('/\{\{\s*'.$key.'\s*\}\}/', $val, $stub);
+                $stub = preg_replace('/\{\{\s*'.preg_quote($key,'/').'\s*\}\}/', $val, $stub);
             }
 
             $filesystem->put($viewPath, $stub);

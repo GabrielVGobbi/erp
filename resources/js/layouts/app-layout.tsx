@@ -49,7 +49,7 @@ export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="md:hidden text-foreground hover:bg-accent hover:text-accent-foreground"
+                        className="text-white md:hidden  hover:bg-accent hover:text-accent-foreground"
                         onClick={() => setSidebarOpen(!sidebarOpen)}
                     >
                         <Menu className="w-5 h-5" />
@@ -80,7 +80,7 @@ export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Button variant="ghost" size="icon" className="relative text-foreground hover:bg-accent hover:text-accent-foreground">
+                    <Button variant="ghost" size="icon" className="relative text-white hover:bg-accent hover:text-accent-foreground">
                         <Bell className="w-5 h-5" />
                         <span className="absolute -top-1 -right-1 w-2 h-2 bg-destructive rounded-full" />
                     </Button>
@@ -89,7 +89,7 @@ export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps
                             <Button variant="ghost" size="icon" className="text-foreground hover:bg-accent hover:text-accent-foreground">
                                 <Avatar className="w-8 h-8">
                                     <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                                    <AvatarFallback className="bg-primary text-primary-foreground">GG</AvatarFallback>
+                                    <AvatarFallback className="bg-secondary text-secondary-foreground">GG</AvatarFallback>
                                 </Avatar>
                             </Button>
                         </DropdownMenuTrigger>

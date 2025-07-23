@@ -109,7 +109,7 @@ export default function Sidebar() {
                                     <NavItem href="/organizations" icon={Building2}>
                                         Organizações
                                     </NavItem>
-                                    <NavItem href="#" icon={Folder}>
+                                    <NavItem href="/branches" icon={Folder}>
                                         Filiais
                                     </NavItem>
                                 </div>
@@ -143,7 +143,6 @@ export default function Sidebar() {
                                     <NavItem href="#" icon={Users2}>
                                         Projetos
                                     </NavItem>
-
                                 </div>
                             </div>
                         </div>
