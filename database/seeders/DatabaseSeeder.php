@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             OrganizationSeeder::class,
             BranchSeeder::class,
             SupplierSeeder::class,
+            ChartAccountSeeder::class,
         ]);
     }
 }

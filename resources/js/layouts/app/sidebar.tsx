@@ -186,8 +186,11 @@ export default function Sidebar() {
                                     Contabilidade
                                 </div>
                                 <div className="space-y-1">
-                                    <NavItem href="#" icon={CreditCard}>
+                                    <NavItem href="/chart-accounts" icon={CreditCard}>
                                         Plano de Contas
+                                    </NavItem>
+                                    <NavItem href="#" icon={CreditCard}>
+                                        Lançamentos Contábeis
                                     </NavItem>
                                     <NavItem href="#" icon={Wallet}>
                                         Centro de Custo
@@ -195,9 +198,7 @@ export default function Sidebar() {
                                     <NavItem href="#" icon={Receipt}>
                                         Unidades de Negócio
                                     </NavItem>
-                                    <NavItem href="#" icon={CreditCard}>
-                                        Lançamentos Contábeis
-                                    </NavItem>
+
                                 </div>
                             </div>
 

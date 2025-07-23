@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ChartAccountController;
 use App\Http\Controllers\SupplierController;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('organizations', OrganizationController::class);
     Route::resource('branches', BranchController::class);
     Route::resource('suppliers', SupplierController::class);
+    Route::resource('chart-accounts', ChartAccountController::class);
 
     Route::name('table.')->prefix('tables/')->group(
         function () {

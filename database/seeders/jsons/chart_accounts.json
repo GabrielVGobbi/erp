@@ -1,0 +1,840 @@
+[
+    {
+        "code": "1",
+        "name": "ATIVO",
+        "type": "C",
+        "children": [
+            {
+                "code": "1.1",
+                "name": "CIRCULANTE",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "1.1.1",
+                        "name": "CONTAS RETIFICADORAS",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.1.1.1",
+                                "name": "(-) Duplicatas Descontadas",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.1.2",
+                                "name": "(-) Outras Contas Retificadoras",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.1.3",
+                                "name": "(-) Provisão para Ajuste do Estoque ao Valor de Mercado",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.1.4",
+                                "name": "(-) Provisões para Ajuste ao Valor Provável de Realização",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.1.5",
+                                "name": "(-) Provisões para Créditos de Liquidação Duvidosa",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.1.2",
+                        "name": "CRÉDITOS",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.1.2.1",
+                                "name": "Adiantamentos a Fornecedores",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.2",
+                                "name": "CSLL a Recuperar",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.3",
+                                "name": "Clientes",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.4",
+                                "name": "Créditos Fiscais CSLL – Diferenças Temporárias e Base de Cálculo Negativa",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.5",
+                                "name": "Créditos Fiscais IRPJ – Diferenças Temporárias e Prejuízos Fiscais",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.6",
+                                "name": "Créditos por Contribuições e Doações",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.7",
+                                "name": "ICMS e Contribuições a Recuperar",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.8",
+                                "name": "IPI a Recuperar",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.9",
+                                "name": "Imposto de Renda a Recuperar",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.10",
+                                "name": "Outras 9",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.11",
+                                "name": "Outros Impostos e Contribuições a Recuperar",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.12",
+                                "name": "PIS e COFINS a Recuperar",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.2.13",
+                                "name": "Tributos Municipais a Recuperar",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.1.3",
+                        "name": "DESPESAS DO EXERCÍCIO SEGUINTE",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.1.3.1",
+                                "name": "Despesas do Exercício Seguinte 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.3.2",
+                                "name": "Outras Contas 4",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.1.4",
+                        "name": "DISPONIBILIDADES",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.1.4.1",
+                                "name": "Bancos",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.4.2",
+                                "name": "Caixa",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.4.3",
+                                "name": "Conta Bancária",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.4.4",
+                                "name": "Contas Bancárias – Doações",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.4.5",
+                                "name": "Dinheiro",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.1.5",
+                        "name": "ESTOQUES",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.1.5.1",
+                                "name": "All Warehouses",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.2",
+                                "name": "Construções em Andamento de Imóveis Destinados à Venda",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.3",
+                                "name": "Estoques Destinados à Doação",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.4",
+                                "name": "Imóveis Destinados à Venda",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.5",
+                                "name": "Insumos (materiais diretos)",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.6",
+                                "name": "Insumos Agropecuários",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.7",
+                                "name": "Mercadorias para Revenda",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.8",
+                                "name": "Outras 11",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.9",
+                                "name": "Produtos Acabados",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.10",
+                                "name": "Produtos Agropecuários Acabados",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.11",
+                                "name": "Produtos Agropecuários em Formação",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.12",
+                                "name": "Produtos em Elaboração",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.1.5.13",
+                                "name": "Serviços em andamento",
+                                "type": "C"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "1.2",
+                "name": "NÃO CIRCULANTE",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "1.2.1",
+                        "name": "DIFERIDO",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.2.1.1",
+                                "name": "(-) Amortização do Diferido",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.1.2",
+                                "name": "Correção Monetária - Diferença IPC/BTNF (Lei 8.200/1991) 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.1.3",
+                                "name": "Correção Monetária Especial (Lei 8.200/1991) 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.1.4",
+                                "name": "Demais Aplicações em Despesas Amortizáveis",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.1.5",
+                                "name": "Despesas Pré-Operacionais ou Pré-Industriais",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.1.6",
+                                "name": "Despesas com Pesquisas Científicas ou Tecnológicas",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.2.2",
+                        "name": "IMOBILIZADO",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.2.2.1",
+                                "name": "(-) Depreciações, Amortizações e Quotas de Exaustão",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.2.2",
+                                "name": "(-) Outras Contas Redutoras do Imobilizado",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.2.3",
+                                "name": "Aeronaves",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.2.4",
+                                "name": "Construções em Andamento",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.2.5",
+                                "name": "Correção Monetária - Diferença IPC/BTNF (Lei 8.200/1991)",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.2.6",
+                                "name": "Correção Monetária Especial (Lei 8.200/1991)",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.2.7",
+                                "name": "Direitos Contratuais de Exploração de Florestas",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.2.3",
+                        "name": "INTANGÍVEL",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.2.3.1",
+                                "name": "(-) Amortização do Intangível",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.2",
+                                "name": "(-) Outras Contas Redutoras do Intangível",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.3",
+                                "name": "Concessões",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.4",
+                                "name": "Desenvolvimento de Produtos",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.5",
+                                "name": "Direitos Autorais",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.6",
+                                "name": "Franquias",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.7",
+                                "name": "Fundo de Comércio",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.8",
+                                "name": "Marcas e Patentes",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.9",
+                                "name": "Outras 12",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.3.10",
+                                "name": "Software ou Programas de Computador",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.2.4",
+                        "name": "INVESTIMENTOS",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.2.4.1",
+                                "name": "(-) Deságios e Provisão para Perdas Prováveis em Investimentos",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.2",
+                                "name": "(-) Outras Contas Retificadoras 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.3",
+                                "name": "Correção Monetária - Diferença IPC/BTNF (Lei 8.200/1991) 2",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.4",
+                                "name": "Correção Monetária Especial (Lei 8.200/1991) 2",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.5",
+                                "name": "Investimentos Decorrentes de Incentivos Fiscais",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.6",
+                                "name": "Outras Contas 5",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.7",
+                                "name": "Outros Investimentos",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.8",
+                                "name": "Participações Permanentes em Coligadas ou Controladas",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.4.9",
+                                "name": "Ágios em Investimentos",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "1.2.5",
+                        "name": "REALIZÁVEL A LONGO PRAZO",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "1.2.5.1",
+                                "name": "(-) Duplicatas Descontadas 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.2",
+                                "name": "(-) Outras Contas Retificadoras 2",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.3",
+                                "name": "(-) Provisões para Ajuste ao Valor Provável de Realização 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.4",
+                                "name": "(-) Provisões para Créditos de Liquidação Duvidosa 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.5",
+                                "name": "Clientes 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.6",
+                                "name": "Créditos Fiscais CSLL – Diferenças Temporárias e Base de Cálculo Negativa 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.7",
+                                "name": "Créditos Fiscais IRPJ – Diferenças Temporárias e Prejuízos Fiscais 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.8",
+                                "name": "Créditos com Pessoas Ligadas (Físicas/Jurídicas)",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.9",
+                                "name": "Créditos por Contribuições e Doações 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.10",
+                                "name": "Depósitos Judiciais",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.11",
+                                "name": "Outras Contas 6",
+                                "type": "C"
+                            },
+                            {
+                                "code": "1.2.5.12",
+                                "name": "Valores Mobiliários",
+                                "type": "C"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "2",
+        "name": "PASSIVO",
+        "type": "C",
+        "children": [
+            {
+                "code": "2.1",
+                "name": "CIRCULANTE",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "2.1.1",
+                        "name": "OBRIGAÇÕES DE CURTO PRAZO",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "2.1.1.1",
+                                "name": "(-) Contas Retificadoras",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.2",
+                                "name": "Adiantamentos de Clientes",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.3",
+                                "name": "Arrendamento Mercantil (Financeiro) a Curto Prazo – Exterior",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.4",
+                                "name": "Arrendamento Mercantil (Financeiro) a Curto Prazo – Sistema Financeiro Nacional",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.5",
+                                "name": "Contribuições Previdenciárias a Recolher",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.6",
+                                "name": "Dividendos Propostos ou Lucros Creditados",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.7",
+                                "name": "Doações e Subvenções para Investimentos",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.8",
+                                "name": "Débitos Fiscais CSLL – Diferenças Temporárias",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.9",
+                                "name": "Débitos Fiscais IRPJ – Diferenças Temporárias",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.10",
+                                "name": "FGTS a Recolher",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.11",
+                                "name": "Financiamentos a Curto Prazo – Exterior",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.12",
+                                "name": "Financiamentos a Curto Prazo – Outros",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.13",
+                                "name": "Financiamentos a Curto Prazo – Sistema Financeiro Nacional",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.14",
+                                "name": "Fornecedores",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.15",
+                                "name": "Gastos incluídos na valorização",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.16",
+                                "name": "ICMS e Contribuições a Recolher",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.17",
+                                "name": "IPI a Recolher",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.18",
+                                "name": "Outras Contas",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.19",
+                                "name": "Outros Tributos a Recolher",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.20",
+                                "name": "PIS e COFINS a Recolher",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.21",
+                                "name": "Provisão para a Contribuição Social sobre o Lucro Líquido",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.22",
+                                "name": "Provisão para o Imposto de Renda",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.23",
+                                "name": "Provisões de Natureza Cível",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.24",
+                                "name": "Provisões de Natureza Fiscal",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.25",
+                                "name": "Provisões de Natureza Trabalhista",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.26",
+                                "name": "Salários a Pagar",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.1.27",
+                                "name": "Tributos Municipais a Recolher",
+                                "type": "C"
+                            }
+                        ]
+                    },
+                    {
+                        "code": "2.1.2",
+                        "name": "OBRIGAÇÕES AJUSTADORAS DE CURTO PRAZO",
+                        "type": "C",
+                        "children": [
+                            {
+                                "code": "2.1.2.1",
+                                "name": "(-) Contas Retificadoras 1",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.2.2",
+                                "name": "Arrendamento Mercantil (Financeiro) a Longo Prazo – Sistema Financeiro Nacional",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.2.3",
+                                "name": "Arrendamento Mercantil (Financeiro) a Longo Prazo – Exterior",
+                                "type": "C"
+                            },
+                            {
+                                "code": "2.1.2.4",
+                                "name": "Créditos de Pessoas Ligadas (Físicas/Jurídicas)",
+                                "type": "C"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "code": "2.2",
+                "name": "NÃO CIRCULANTE",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "2.2.1",
+                        "name": "OBRIGAÇÕES A LONGO PRAZO – Sistema Financeiro Nacional",
+                        "type": "C"
+                    },
+                    {
+                        "code": "2.2.2",
+                        "name": "OBRIGAÇÕES A LONGO PRAZO – Exterior",
+                        "type": "C"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "code": "3",
+        "name": "PATRIMÔNIO LÍQUIDO",
+        "type": "C",
+        "children": [
+            {
+                "code": "3.1",
+                "name": "AJUSTES DE AVALIAÇÃO PATRIMONIAL",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "3.1.1",
+                        "name": "(-) Ajustes às Normas Internacionais de Contabilidade",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.1.2",
+                        "name": "Ajustes às Normas Internacionais de Contabilidade",
+                        "type": "C"
+                    }
+                ]
+            },
+            {
+                "code": "3.2",
+                "name": "CAPITAL REALIZADO",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "3.2.1",
+                        "name": "(-) Capital a Integralizar de Domiciliados e Residentes no Exterior",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.2.2",
+                        "name": "(-) Capital a Integralizar de Domiciliados e Residentes no País",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.2.3",
+                        "name": "Capital Subscrito de Domiciliados e Residentes no Exterior",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.2.4",
+                        "name": "Capital Subscrito de Domiciliados e Residentes no País",
+                        "type": "C"
+                    }
+                ]
+            },
+            {
+                "code": "3.3",
+                "name": "OUTRAS CONTAS",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "3.3.1",
+                        "name": "Outras 2",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.3.2",
+                        "name": "(-) Ações em Tesouraria",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.3.3",
+                        "name": "(-) Prejuízos Acumulados",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.3.4",
+                        "name": "Lucros Acumulados e/ou Saldo à Disposição da Assembléia",
+                        "type": "C"
+                    }
+                ]
+            },
+            {
+                "code": "3.4",
+                "name": "RESERVAS",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "3.4.1",
+                        "name": "Outras Reservas",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.4.2",
+                        "name": "Reserva para Aumento de Capital (Lei 9.249/1995, art. 9º, § 9º)",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.4.3",
+                        "name": "Reservas de Capital",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.4.4",
+                        "name": "Reservas de Lucros",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.4.5",
+                        "name": "Reservas de Lucros – Doações e Subvenções para Investimentos",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.4.6",
+                        "name": "Reservas de Lucros – Prêmio na Emissão de Debêntures",
+                        "type": "C"
+                    },
+                    {
+                        "code": "3.4.7",
+                        "name": "Reservas de Reavaliação",
+                        "type": "C"
+                    }
+                ]
+            },
+            {
+                "code": "3.5",
+                "name": "PATRIMÔNIO SOCIAL",
+                "type": "C"
+            },
+            {
+                "code": "3.6",
+                "name": "FUNDO PATRIMONIAL",
+                "type": "C",
+                "children": [
+                    {
+                        "code": "3.6.1",
+                        "name": "Fundo Patrimonial 1",
+                        "type": "C"
+                    }
+                ]
+            }
+        ]
+    }
+]
