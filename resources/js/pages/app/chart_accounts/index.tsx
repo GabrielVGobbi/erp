@@ -118,7 +118,7 @@ export default function ChartAccountsIndex({ chart_accounts }: { chart_accounts:
                 if (item.amount) {
                     const value = typeof item.amount === 'string' && item.amount.includes('R$')
                         ? parseFloat(item.amount.replace(/[^\d,]/g, '').replace(',', '.'))
-                        : parseFloat(item.amount) / 100;
+                        : parseFloat(item.amount) ;
                     total += value;
                 }
                 if (item.children) {
@@ -135,7 +135,7 @@ export default function ChartAccountsIndex({ chart_accounts }: { chart_accounts:
         if (item.amount) {
             const value = typeof item.amount === 'string' && item.amount.includes('R$')
                 ? parseFloat(item.amount.replace(/[^\d,]/g, '').replace(',', '.'))
-                : parseFloat(item.amount) / 100;
+                : parseFloat(item.amount) ;
             total += value;
         }
         if (item.children) {
@@ -157,7 +157,7 @@ export default function ChartAccountsIndex({ chart_accounts }: { chart_accounts:
         }
 
         // Se vem como número (em centavos)
-        const value = parseFloat(amount)*100 ;
+        const value = parseFloat(amount) ;
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'

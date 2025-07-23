@@ -3,8 +3,9 @@
 namespace App\Supports\Casts;
 
 use Illuminate\Support\Number;
+use JsonSerializable;
 
-class MoneyValue
+class MoneyValue implements JsonSerializable
 {
     public function __construct(
         protected int|float $value,
@@ -25,5 +26,14 @@ class MoneyValue
     public function __toString(): string
     {
         return $this->formatted();
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'raw'       => $this->raw(),
+            'value'     => $this->value,
+            'formatted' => $this->formatted(),
+        ];
     }
 }

@@ -141,6 +141,7 @@ export function createSelectionColumn<TData>(): ColumnDef<TData, any> {
 }
 
 export function createColumn<TData, TValue = any>(
+
     header: string,
     accessorKey: string
 ): ColumnDef<TData, TValue> {
@@ -281,7 +282,7 @@ export function createAdvancedActionsColumn<TData>({
                 actionId: string
                 isOpen: boolean
             } | null>(null)
-            
+
             const handleAction = async (action: ActionButton<TData>, actionId: string) => {
                 if (action.type === 'confirm') {
                     setConfirmAction({
@@ -305,10 +306,10 @@ export function createAdvancedActionsColumn<TData>({
 
             const executeConfirmAction = async () => {
                 if (!confirmAction) return
-                
+
                 const { action, actionId } = confirmAction
                 setLoadingActions(prev => new Set(prev.add(actionId)))
-                
+
                 try {
                     if (action.onClick) {
                         await action.onClick(record, onRefresh)
@@ -389,14 +390,14 @@ export function createAdvancedActionsColumn<TData>({
                                     </DialogDescription>
                                 </DialogHeader>
                                 <DialogFooter>
-                                    <Button 
-                                        variant="outline" 
+                                    <Button
+                                        variant="outline"
                                         onClick={() => setConfirmAction(null)}
                                         disabled={confirmAction?.actionId ? loadingActions.has(confirmAction.actionId) : false}
                                     >
                                         Cancelar
                                     </Button>
-                                    <Button 
+                                    <Button
                                         variant={confirmAction?.action.variant || 'default'}
                                         onClick={executeConfirmAction}
                                         disabled={confirmAction?.actionId ? loadingActions.has(confirmAction.actionId) : false}
@@ -446,7 +447,7 @@ export function createAdvancedActionsColumn<TData>({
                                             if (action.type === 'link' && action.href) {
                                                 return (
                                                     <DropdownMenuItem key={actionId} asChild>
-                                                        <Link 
+                                                        <Link
                                                             href={action.href(record)}
                                                             className={action.variant === 'destructive' ? 'text-destructive' : ''}
                                                         >
@@ -485,7 +486,7 @@ export function createAdvancedActionsColumn<TData>({
                                         if (action.type === 'link' && action.href) {
                                             return (
                                                 <DropdownMenuItem key={actionId} asChild>
-                                                    <Link 
+                                                    <Link
                                                         href={action.href(record)}
                                                         className={action.variant === 'destructive' ? 'text-destructive' : ''}
                                                     >
@@ -532,14 +533,14 @@ export function createAdvancedActionsColumn<TData>({
                                 </DialogDescription>
                             </DialogHeader>
                             <DialogFooter>
-                                <Button 
-                                    variant="outline" 
+                                <Button
+                                    variant="outline"
                                     onClick={() => setConfirmAction(null)}
                                     disabled={confirmAction?.actionId ? loadingActions.has(confirmAction.actionId) : false}
                                 >
                                     Cancelar
                                 </Button>
-                                <Button 
+                                <Button
                                     variant={confirmAction?.action.variant || 'default'}
                                     onClick={executeConfirmAction}
                                     disabled={confirmAction?.actionId ? loadingActions.has(confirmAction.actionId) : false}

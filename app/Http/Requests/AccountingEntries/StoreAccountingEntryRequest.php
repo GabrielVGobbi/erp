@@ -22,7 +22,10 @@ class StoreAccountingEntryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'account_id' => 'required|integer|exists:accounts,id',
+            'amount' => 'required|numeric|min:0.01',
+            'description' => 'nullable|string|max:255',
+            'entry_date' => 'required|date',
         ];
     }
 }

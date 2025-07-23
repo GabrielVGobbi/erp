@@ -43,7 +43,7 @@ class ChartAccount extends Model
     protected function casts(): array
     {
         return [
-            //'amount' => Currency::class,
+            'amount' => Currency::class,
         ];
     }
 

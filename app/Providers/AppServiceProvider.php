@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         setlocale(LC_ALL, 'nl_NL');
         Carbon::setLocale('pt_BR');
         date_default_timezone_set('America/Sao_Paulo');
+
         Model::preventLazyLoading(!app()->isProduction());
     }
 }

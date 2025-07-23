@@ -24,3 +24,5 @@ yarn-error.log
 /.zed
 .config
 cursor/*
+/storage/backups
+docs/*
