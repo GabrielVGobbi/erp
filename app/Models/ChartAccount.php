@@ -43,7 +43,7 @@ class ChartAccount extends Model
     protected function casts(): array
     {
         return [
-            'amount' => Currency::class,
+            //'amount' => Currency::class,
         ];
     }
 
@@ -52,5 +52,15 @@ class ChartAccount extends Model
     public function organization()
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(ChartAccount::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(ChartAccount::class, 'parent_id');
     }
 }

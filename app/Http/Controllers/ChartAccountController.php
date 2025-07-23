@@ -16,8 +16,13 @@ class ChartAccountController extends Controller
      */
     public function index()
     {
+        $chartAccounts = ChartAccount::with(['organization', 'children.children.children'])
+            ->whereNull('parent_id')
+            ->get()
+            ->groupBy('organization_id');
+
         return Inertia::render('app/chart_accounts/index', [
-            'chart_accounts' => ChartAccount::all(),
+            'chart_accounts' => $chartAccounts,
         ]);
     }
 
