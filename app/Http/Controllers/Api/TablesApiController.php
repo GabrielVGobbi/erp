@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountingEntriesResource;
 use App\Http\Resources\BranchResource;
+use App\Http\Resources\CostCenterResource;
 use App\Http\Resources\OrganizationResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\AccountingEntries;
 use App\Models\Branch;
+use App\Models\CostCenter;
 use App\Models\Organization;
 use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +32,20 @@ class TablesApiController extends Controller
         $this->sort = $request->input('sort') ?? 'id';
         $this->filter = $request->input('filter') ?? [];
         $this->filters = $request->input('filters') ?? [];
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function costCenters()
+    {
+        $costCenter = new CostCenter();
+
+        $costCenter = $costCenter->with('parent')->orderBy($this->sort, $this->order);
+
+        $costCenter = $this->limit == 'all' ? $costCenter->get() : $costCenter->paginate($this->limit);
+
+        return CostCenterResource::collection($costCenter);
     }
 
     /**

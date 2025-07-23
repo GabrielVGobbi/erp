@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountingEntryController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChartAccountController;
+use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Resources\ChartAccountResource;
 use App\Models\ChartAccount;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('suppliers', SupplierController::class);
     Route::resource('chart-accounts', ChartAccountController::class);
     Route::resource('accounting-entries', AccountingEntryController::class);
+    Route::resource('cost-centers', CostCenterController::class);
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
@@ -38,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('branches', [App\Http\Controllers\Api\TablesApiController::class, 'branches'])->name('branches');
             Route::get('suppliers', [App\Http\Controllers\Api\TablesApiController::class, 'suppliers'])->name('suppliers');
             Route::get('accounting-entries', [App\Http\Controllers\Api\TablesApiController::class, 'accountingEntries'])->name('accountingEntries');
+            Route::get('costCenters', [App\Http\Controllers\Api\TablesApiController::class, 'costCenters'])->name('costCenters');
         }
     );
 });

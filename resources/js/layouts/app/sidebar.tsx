@@ -192,7 +192,7 @@ export default function Sidebar() {
                                     <NavItem href="/accounting-entries" icon={CreditCard}>
                                         Lançamentos Contábeis
                                     </NavItem>
-                                    <NavItem href="#" icon={Wallet}>
+                                    <NavItem href="/cost-centers" icon={Wallet}>
                                         Centro de Custo
                                     </NavItem>
                                     <NavItem href="#" icon={Receipt}>
