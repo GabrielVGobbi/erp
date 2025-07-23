@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OrganizationsResource;
+use App\Models\Organization;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
+use Carbon\Carbon;
+
+class TablesApiController extends Controller
+{
+    protected $limit, $offset, $order, $search, $sort, $filter, $filters;
+
+    public function __construct(Request $request)
+    {
+        $this->limit = $request->input('pageSize') ?? '30';
+        $this->order = $request->input('order') ?? 'asc';
+        $this->offset = $request->input('offset') ?? 0;
+        $this->search = $request->input('search') ?? '';
+        $this->sort = $request->input('sort') ?? 'id';
+        $this->filter = $request->input('filter') ?? [];
+        $this->filters = $request->input('filters') ?? [];
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function organizations()
+    {
+        $organizations = new Organization();
+
+        $organizations = $organizations->orderBy($this->sort, $this->order);
+
+        $organizations = $this->limit == 'all' ? $organizations->get() : $organizations->paginate($this->limit);
+
+        return OrganizationsResource::collection($organizations);
+    }
+
+    /**
+     * Display query for DB.
+     * @param  array  $searchColumns colunas que podem ser pesquisadas
+     * @param  array  $withCount
+     */
+    private function get(Model $model, $with = [], $where = [], $whereHas = [])
+    {
+        if ($this->sort == 'idi') {
+            $this->sort = 'id';
+        }
+
+        $this->filter = array_merge(['search' => $this->search], $this->filter);
+
+        $model = $model
+            ->filtered($this->filter)
+            ->orderBy($this->sort, $this->order);
+
+        if (!empty($with)) {
+            $model->with($with);
+        }
+
+        if (!empty($where)) {
+            foreach ($where as $w => $value) {
+                $model->where($w, $value);
+            }
+        }
+
+        if (!empty($whereHas)) {
+            foreach ($whereHas as $w) {
+                $model->whereHas($w);
+            }
+        }
+
+        #dd([$model->toSql(), $model->getBindings()]);
+
+        return $this->limit == 'all' ? $model->get() : $model->paginate($this->limit);
+    }
+}

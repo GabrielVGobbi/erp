@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\OrganizationController;
+use App\Models\Organization;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,9 +15,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     // Rotas de Overview
-    Route::get('organizations', function () {
-        return Inertia::render('organizations/index');
-    })->name('organizations.index');
+    //Route::get('organizations', function () {
+    //    return Inertia::render('organizations/index');
+    //})->name('organizations.index');
 
     //Route::get('branches', function () {
     //    return Inertia::render('branches/index');
@@ -51,8 +53,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Route::get('help', function () {
     //    return Inertia::render('help/index');
     //})->name('help.index');
+
+    Route::resource('organizations', OrganizationController::class);
+
+    Route::name('table.')->prefix('tables/')->group(
+        function () {
+            Route::get('organizations', [App\Http\Controllers\Api\TablesApiController::class, 'organizations'])->name('organizations');
+        }
+    );
 });
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-

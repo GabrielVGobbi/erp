@@ -52,11 +52,10 @@ export default function Sidebar() {
             <Link
                 href={linkHref}
                 onClick={handleNavigation}
-                className={`flex items-center px-3 py-2 text-sm rounded-md transition-colors ${
-                    isActive
+                className={`flex items-center px-3 py-2 text-sm rounded-md transition-colors ${isActive
                         ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                         : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                }`}
+                    }`}
             >
                 <Icon className="h-4 w-4 mr-3 flex-shrink-0" />
                 {children}
@@ -107,7 +106,7 @@ export default function Sidebar() {
                                     <NavItem href="/dashboard" icon={Home}>
                                         Dashboard
                                     </NavItem>
-                                    <NavItem href="#" icon={Building2}>
+                                    <NavItem href="/organizations" icon={Building2}>
                                         Organizações
                                     </NavItem>
                                     <NavItem href="#" icon={Folder}>
