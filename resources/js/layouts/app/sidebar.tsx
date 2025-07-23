@@ -189,7 +189,7 @@ export default function Sidebar() {
                                     <NavItem href="/chart-accounts" icon={CreditCard}>
                                         Plano de Contas
                                     </NavItem>
-                                    <NavItem href="#" icon={CreditCard}>
+                                    <NavItem href="/accounting-entries" icon={CreditCard}>
                                         Lançamentos Contábeis
                                     </NavItem>
                                     <NavItem href="#" icon={Wallet}>
