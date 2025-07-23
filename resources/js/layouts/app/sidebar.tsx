@@ -1,35 +1,49 @@
 "use client"
 
-import { Link, usePage } from "@inertiajs/react"
+import { Link } from "@inertiajs/react"
 import {
-    BarChart2,
     Receipt,
     Building2,
     CreditCard,
     Folder,
     Wallet,
     Users2,
-    Shield,
-    MessagesSquare,
-    Video,
     Settings,
     HelpCircle,
-    Menu,
-    Search, Bell, Workflow, BarChart3, Users, Database, ArrowRight
+    ChevronDown,
+    ChevronRight,
+    FolderOpen,
+    Calendar,
+    Target,
+    Clock,
+    BaggageClaim,
+    HandCoins,
+    Truck,
+    ShoppingCart,
+    ShoppingBag
 } from "lucide-react"
 
 import { Home } from "lucide-react"
 import { useState } from "react"
-import { type SharedData } from '@/types';
+
 import { route } from 'ziggy-js';
 import { useActiveRoute } from '@/utils/route-helpers';
 
 export default function Sidebar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [expandedItems, setExpandedItems] = useState<string[]>([]);
     const { isActiveRoute, isActiveUrl } = useActiveRoute();
 
     function handleNavigation() {
         setIsMobileMenuOpen(false)
+    }
+
+    function toggleExpanded(itemId: string) {
+        setExpandedItems(prev =>
+            prev.includes(itemId)
+                ? prev.filter(id => id !== itemId)
+                : [...prev, itemId]
+        )
     }
 
     function NavItem({
@@ -53,8 +67,8 @@ export default function Sidebar() {
                 href={linkHref}
                 onClick={handleNavigation}
                 className={`flex items-center px-3 py-2 text-sm rounded-md transition-colors ${isActive
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                        : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                     }`}
             >
                 <Icon className="h-4 w-4 mr-3 flex-shrink-0" />
@@ -63,15 +77,67 @@ export default function Sidebar() {
         )
     }
 
+    function CollapsibleNavItem({
+        id,
+        icon: Icon,
+        children,
+        subItems,
+    }: {
+        id: string;
+        icon: any;
+        children: React.ReactNode;
+        subItems: Array<{
+            routeName?: string;
+            href?: string;
+            icon: unknown;
+            label: string;
+        }>;
+    }) {
+        const isExpanded = expandedItems.includes(id);
+        const ChevronIcon = isExpanded ? ChevronDown : ChevronRight;
 
-    const navigation = [
-        { name: "Overview", href: "/dashboard", icon: Home },
-        { name: "Workflows", href: "/workflows", icon: Workflow },
-        { name: "Analytics", href: "/analytics", icon: BarChart3 },
-        { name: "Templates", href: "/templates", icon: Database },
-        { name: "Team", href: "/team", icon: Users },
-        { name: "Settings", href: "/settings", icon: Settings },
-    ]
+        return (
+            <div>
+                <button
+                    onClick={() => toggleExpanded(id)}
+                    className="w-full flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                >
+                    <div className="flex items-center">
+                        <Icon className="h-4 w-4 mr-3 flex-shrink-0" />
+                        {children}
+                    </div>
+                    <ChevronIcon className="h-4 w-4 transition-transform duration-200" />
+                </button>
+
+                {isExpanded && (
+                    <div className="ml-6 mt-1 space-y-1 border-l border-sidebar-border pl-3">
+                        {subItems.map((item, index) => {
+                            const isActive = item.routeName ? isActiveRoute(item.routeName) : (item.href ? isActiveUrl(item.href) : false);
+                            const linkHref = item.routeName ? route(item.routeName) : (item.href || '#');
+
+                            return (
+                                <Link
+                                    key={index}
+                                    href={linkHref}
+                                    onClick={handleNavigation}
+                                    className={`flex items-center px-3 py-2 text-sm rounded-md transition-colors ${isActive
+                                        ? "bg-sidebar-accent text-sidebar-muted-foreground font-medium"
+                                        : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                        }`}
+                                >
+                                    <item.icon className="h-3.5 w-3.5 mr-3 flex-shrink-0" />
+                                    {item.label}
+                                </Link>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+
+
 
     return (
         <>
@@ -137,12 +203,52 @@ export default function Sidebar() {
 
                             <div>
                                 <div className="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                                    Organização
+                                    Modulos
                                 </div>
-                                <div className="space-y-1">
-                                    <NavItem href="#" icon={Users2}>
+
+                                <div className="space-y-10 mb-4">
+                                    <CollapsibleNavItem
+                                        id="compras"
+                                        icon={BaggageClaim}
+                                        subItems={[
+                                            { href: "/suppliers", icon: Truck, label: "Fornecedores" },
+                                            { href: "/buying/concluidos", icon: ShoppingCart, label: "Inventário" },
+                                            { href: "/buying/equipes", icon: BaggageClaim, label: "Requisição de Compra" },
+                                            { href: "/buying/equipes", icon: ShoppingBag, label: "Ordem de Compra" }
+                                        ]}
+                                    >
+                                        Compras
+                                    </CollapsibleNavItem>
+                                </div>
+
+                                <div className="space-y-10 mb-4">
+                                    <CollapsibleNavItem
+                                        id="financial"
+                                        icon={HandCoins}
+                                        subItems={[
+                                            { href: "/financial/ativos", icon: Target, label: "Projetos Ativos" },
+                                            { href: "/financial/concluidos", icon: Calendar, label: "Projetos Concluídos" },
+                                            { href: "/financial/cronograma", icon: Clock, label: "Cronograma" },
+                                            { href: "/financial/equipes", icon: Users2, label: "Equipes" }
+                                        ]}
+                                    >
+                                        Financeiro
+                                    </CollapsibleNavItem>
+                                </div>
+
+                                <div className="space-y-10 mb-4">
+                                    <CollapsibleNavItem
+                                        id="projects"
+                                        icon={FolderOpen}
+                                        subItems={[
+                                            { href: "/projects/ativos", icon: Target, label: "Projetos Ativos" },
+                                            { href: "/projects/concluidos", icon: Calendar, label: "Projetos Concluídos" },
+                                            { href: "/projects/cronograma", icon: Clock, label: "Cronograma" },
+                                            { href: "/projects/equipes", icon: Users2, label: "Equipes" }
+                                        ]}
+                                    >
                                         Projetos
-                                    </NavItem>
+                                    </CollapsibleNavItem>
                                 </div>
                             </div>
                         </div>

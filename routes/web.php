@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\SupplierController;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    return redirect()->route('dashboard');
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -57,11 +58,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('organizations', OrganizationController::class);
     Route::resource('branches', BranchController::class);
+    Route::resource('suppliers', SupplierController::class);
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
             Route::get('organizations', [App\Http\Controllers\Api\TablesApiController::class, 'organizations'])->name('organizations');
             Route::get('branches', [App\Http\Controllers\Api\TablesApiController::class, 'branches'])->name('branches');
+            Route::get('suppliers', [App\Http\Controllers\Api\TablesApiController::class, 'suppliers'])->name('suppliers');
         }
     );
 });

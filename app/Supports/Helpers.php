@@ -454,12 +454,34 @@ function maskCpf($cpf)
     return $maskedCpf;
 }
 
-function vyb()
-{
-    return config('vyb');
-}
-
 function cache_gateway()
 {
     return app()->isProduction() ? 2 : 30;
+}
+
+if (!function_exists('format_document')) {
+    function format_document(string $document): string
+    {
+        $onlyNumbers = preg_replace('/\D/', '', $document);
+
+        if (strlen($onlyNumbers) === 11) {
+            // CPF: 000.000.000-00
+            return preg_replace(
+                '/^(\d{3})(\d{3})(\d{3})(\d{2})$/',
+                '$1.$2.$3-$4',
+                $onlyNumbers
+            );
+        }
+
+        if (strlen($onlyNumbers) === 14) {
+            // CNPJ: 00.000.000/0000-00
+            return preg_replace(
+                '/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/',
+                '$1.$2.$3/$4-$5',
+                $onlyNumbers
+            );
+        }
+
+        return $document; // Retorna sem formato se não for 11 ou 14 dígitos
+    }
 }

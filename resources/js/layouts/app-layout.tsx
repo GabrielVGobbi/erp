@@ -109,7 +109,7 @@ export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
                 <aside
-                    className={`fixed inset-y-0 left-0 z-20 w-64 transform bg-sidebar border-r border-sidebar-border shadow-md transition-transform md:relative md:translate-x-0 md:shadow-none ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                    className={`fixed inset-y-0 left-0 z-20 w-68 transform bg-sidebar border-r border-sidebar-border shadow-md transition-transform md:relative md:translate-x-0 md:shadow-none ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                         }`}
                 >
                     <nav className="h-full overflow-y-auto">
