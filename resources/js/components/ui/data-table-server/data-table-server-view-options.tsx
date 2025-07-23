@@ -41,7 +41,6 @@ export function DataTableServerViewOptions<TData>({
 
         // Resetar visibilidade de colunas
         table.getAllColumns().forEach(column => {
-            console.log(column);
             if (column.getCanHide()) {
                 column.toggleVisibility(true);
             }

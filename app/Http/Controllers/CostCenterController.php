@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CostCenter\UpdateCostCenterRequest;
 use App\Http\Resources\CostCenterResource;
+use App\Http\Resources\OrganizationResource;
 use App\Models\CostCenter;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -60,6 +63,7 @@ class CostCenterController extends Controller
 
         return Inertia::render('app/cost_centers/show', [
             'costCenterData' => new CostCenterResource($costCenter),
+            #'organizationsData' =>  OrganizationResource::collection(Organization::get()),
         ]);
     }
 
@@ -67,26 +71,28 @@ class CostCenterController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param CostCenter $costCenter
-     * @return \Illuminate\Contracts\View\View
      */
     public function edit(CostCenter $costCenter)
     {
-        return view('admin.costCenter.edit', compact('costCenter'));
+        return Inertia::render('app/cost_centers/edit', [
+            'costCenterData' => new CostCenterResource($costCenter),
+            'organizationsData' =>  OrganizationResource::collection(Organization::get()),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param StoreUpdateCostCenter $request
+     * @param UpdateCostCenterRequest $request
      * @param CostCenter $costCenter
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreUpdateCostCenter $request, CostCenter $costCenter)
+    public function update(UpdateCostCenterRequest $request, CostCenter $costCenter)
     {
         $costCenter->update($request->validated());
 
         return redirect()
-            ->route('admin.costCenter.show', costCenter->id)
+            ->route('cost-centers.show', $costCenter->id)
             ->with('success', 'CostCenter atualizado com sucesso!');
     }
 

@@ -47,6 +47,11 @@ class CostCenter extends Model
 
     protected $appends = [];
 
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
     public function children(): HasMany
     {
         return $this->hasMany(CostCenter::class, 'parent_id');

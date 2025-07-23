@@ -41,7 +41,7 @@ class TablesApiController extends Controller
     {
         $costCenter = new CostCenter();
 
-        $costCenter = $costCenter->with('parent')->orderBy($this->sort, $this->order);
+        $costCenter = $costCenter->with(['parent', 'organization'])->orderBy($this->sort, $this->order);
 
         $costCenter = $this->limit == 'all' ? $costCenter->get() : $costCenter->paginate($this->limit);
 

@@ -17,6 +17,7 @@ class CostCenterResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'organization' => $this->organization->name,
             'parent' => $this->parent?->name ?? 'Principal',
         ];
     }
