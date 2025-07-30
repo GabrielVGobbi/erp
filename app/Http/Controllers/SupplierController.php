@@ -16,7 +16,11 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return Inertia::render('app/suppliers/index');
+        $supplier = Supplier::first();
+
+        return Inertia::render('app/suppliers/index', [
+            'logs' => $supplier->logs(),
+        ]);
     }
 
     /**
