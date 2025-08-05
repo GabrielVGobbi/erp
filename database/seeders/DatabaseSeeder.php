@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ChartAccountSeeder::class,
             AccountingEntrySeeder::class,
             CostCenterSeeder::class,
+            InventorySeeder::class,
         ]);
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AccountingEntryController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChartAccountController;
 use App\Http\Controllers\CostCenterController;
+use App\Http\Controllers\App\InventoryController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Resources\ChartAccountResource;
 use App\Models\ChartAccount;
@@ -33,6 +35,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('chart-accounts', ChartAccountController::class);
     Route::resource('accounting-entries', AccountingEntryController::class);
     Route::resource('cost-centers', CostCenterController::class);
+    Route::resource('inventories', InventoryController::class);
+
+    // Rotas de notificações
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::get('/unread', [NotificationController::class, 'unread'])->name('unread');
+        Route::get('/count', [NotificationController::class, 'count'])->name('count');
+        Route::patch('/{uuid}/read', [NotificationController::class, 'markAsRead'])->name('markAsRead');
+        Route::patch('/{uuid}/unread', [NotificationController::class, 'markAsUnread'])->name('markAsUnread');
+        Route::patch('/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('markAllAsRead');
+        Route::delete('/{uuid}', [NotificationController::class, 'destroy'])->name('destroy');
+        Route::post('/test', [NotificationController::class, 'createTest'])->name('test');
+    });
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
@@ -41,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('suppliers', [App\Http\Controllers\Api\TablesApiController::class, 'suppliers'])->name('suppliers');
             Route::get('accounting-entries', [App\Http\Controllers\Api\TablesApiController::class, 'accountingEntries'])->name('accountingEntries');
             Route::get('costCenters', [App\Http\Controllers\Api\TablesApiController::class, 'costCenters'])->name('costCenters');
+            Route::get('inventories', [App\Http\Controllers\Api\TablesApiController::class, 'inventories'])->name('inventories');
         }
     );
 });

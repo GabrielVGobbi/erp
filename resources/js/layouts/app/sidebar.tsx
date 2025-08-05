@@ -212,8 +212,8 @@ export default function Sidebar() {
                                         id="compras"
                                         icon={BaggageClaim}
                                         subItems={[
+                                            { href: "/inventories", icon: ShoppingCart, label: "Inventário" },
                                             { href: "/suppliers", icon: Truck, label: "Fornecedores" },
-                                            { href: "/buying/concluidos", icon: ShoppingCart, label: "Inventário" },
                                             { href: "/buying/equipes", icon: BaggageClaim, label: "Requisição de Compra" },
                                             { href: "/buying/equipes", icon: ShoppingBag, label: "Ordem de Compra" }
                                         ]}

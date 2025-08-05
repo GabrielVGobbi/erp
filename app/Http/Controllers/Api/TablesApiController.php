@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountingEntriesResource;
 use App\Http\Resources\BranchResource;
 use App\Http\Resources\CostCenterResource;
+use App\Http\Resources\InventoryResource;
 use App\Http\Resources\OrganizationResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\AccountingEntries;
 use App\Models\Branch;
 use App\Models\CostCenter;
+use App\Models\Inventory;
 use App\Models\Organization;
 use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +34,20 @@ class TablesApiController extends Controller
         $this->sort = $request->input('sort') ?? 'id';
         $this->filter = $request->input('filter') ?? [];
         $this->filters = $request->input('filters') ?? [];
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function inventories()
+    {
+        $inventories = new Inventory();
+
+        $inventories = $inventories->orderBy($this->sort, $this->order);
+
+        $inventories = $this->limit == 'all' ? $inventories->get() : $inventories->paginate($this->limit);
+
+        return InventoryResource::collection($inventories);
     }
 
     /**
