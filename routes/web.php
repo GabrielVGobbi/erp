@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AccountingEntryController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChartAccountController;
@@ -36,18 +35,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('accounting-entries', AccountingEntryController::class);
     Route::resource('cost-centers', CostCenterController::class);
     Route::resource('inventories', InventoryController::class);
-
-    // Rotas de notificações
-    Route::prefix('notifications')->name('notifications.')->group(function () {
-        Route::get('/', [NotificationController::class, 'index'])->name('index');
-        Route::get('/unread', [NotificationController::class, 'unread'])->name('unread');
-        Route::get('/count', [NotificationController::class, 'count'])->name('count');
-        Route::patch('/{uuid}/read', [NotificationController::class, 'markAsRead'])->name('markAsRead');
-        Route::patch('/{uuid}/unread', [NotificationController::class, 'markAsUnread'])->name('markAsUnread');
-        Route::patch('/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('markAllAsRead');
-        Route::delete('/{uuid}', [NotificationController::class, 'destroy'])->name('destroy');
-        Route::post('/test', [NotificationController::class, 'createTest'])->name('test');
-    });
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
