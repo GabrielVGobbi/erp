@@ -6,11 +6,8 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChartAccountController;
 use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\App\InventoryController;
+use App\Http\Controllers\PurchaseRequisitionController;
 use App\Http\Controllers\SupplierController;
-use App\Http\Resources\ChartAccountResource;
-use App\Models\ChartAccount;
-use App\Models\Organization;
-use App\Services\AccountingEntriesService;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -35,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('accounting-entries', AccountingEntryController::class);
     Route::resource('cost-centers', CostCenterController::class);
     Route::resource('inventories', InventoryController::class);
+    Route::resource('purchaseRequisitions', PurchaseRequisitionController::class);
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
@@ -50,21 +48,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-
-/*
-|--------------------------------------------------------------------------
-|   Teste
-|--------------------------------------------------------------------------
-*/
-Route::post("teste", function () {
-
-    #$chartAccount = ChartAccount::whereId(1)->first();
-
-    #return app(AccountingEntriesService::class)->store([
-    #    'account_id' => 1,
-    #    'amount' => 200,
-    #    'description' => 'Descrição',
-    #    'entry_date' => now(),
-    #]);
-
-})->name('teste');
