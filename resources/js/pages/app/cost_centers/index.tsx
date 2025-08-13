@@ -143,7 +143,6 @@ export default function costCentersIndex() {
 
     return (
         <AppLayout>
-            <Head title="Centro(s) de Custo" />
 
             <div className="max-w-7xl mx-auto">
                 <PageHeader
@@ -159,7 +158,7 @@ export default function costCentersIndex() {
                             columns={columns}
                             data={costCenters}
                             pageCount={1}
-                            apiEndpoint={route('table.costCenters')}
+                            apiEndpoint={'/tables/cost-centers'}
                             searchColumn="name"
                             defaultPageSize={10}
                             onDataLoaded={setcostCenters}

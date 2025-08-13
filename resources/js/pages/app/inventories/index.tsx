@@ -142,7 +142,6 @@ export default function InventoriesIndex() {
 
     return (
         <AppLayout>
-            <Head title="Inventário" />
 
             <div className="max-w-7xl mx-auto">
                 <PageHeader
@@ -158,7 +157,7 @@ export default function InventoriesIndex() {
                             columns={columns}
                             data={inventories}
                             pageCount={1}
-                            apiEndpoint={route('table.inventories')}
+                            apiEndpoint={'/tables/inventories'}
                             searchColumn="name"
                             defaultPageSize={10}
                             onDataLoaded={setinventories}

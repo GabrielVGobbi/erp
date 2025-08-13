@@ -164,7 +164,6 @@ export default function SuppliersIndex() {
 
     return (
         <AppLayout>
-            <Head title="Fornecedores" />
 
             <div className="max-w-7xl mx-auto">
                 <PageHeader
@@ -181,7 +180,7 @@ export default function SuppliersIndex() {
                             columns={columns}
                             data={suppliers}
                             pageCount={1}
-                            apiEndpoint={route('table.suppliers')}
+                            apiEndpoint="tables/suppliers"
                             searchColumn="name"
                             defaultPageSize={10}
                             onDataLoaded={setSuppliers}

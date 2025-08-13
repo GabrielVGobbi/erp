@@ -1,6 +1,7 @@
 import { type BreadcrumbItem } from '@/types';
 import { ChevronRight, Plus } from 'lucide-react';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
 
 interface PageHeaderProps {
     title: string;
@@ -23,7 +24,9 @@ export default function PageHeader({
 }: PageHeaderProps) {
     return (
         <div className="mb-6">
-            {/* Breadcrumbs */}
+            <Head title={title} />
+
+
             {breadcrumbs && breadcrumbs.length > 0 && (
                 <nav className="mb-4">
                     <ol className="flex items-center space-x-2 text-sm text-gray-500">
@@ -72,25 +75,25 @@ export default function PageHeader({
                 {addButton && (
                     <div>
                         {addButton.href ? (
-                            <Link
-                                href={addButton.href}
-                                className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
-                            >
-                                <Plus className="w-4 h-4" />
-                                {addButton.label}
+
+                            <Link href={addButton.href}>
+                                <Button size="sm" className="hover:bg-secondary hover:text-black">
+                                    <Plus className="w-4 h-4" />
+                                    {addButton.label}
+                                </Button>
                             </Link>
+
                         ) : (
-                            <button
-                                onClick={addButton.onClick}
-                                className="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
-                            >
-                                <Plus className="w-4 h-4" />
+
+                            <Button size="sm" onClick={addButton.onClick}>
+                                <Plus className="h-4 w-4 mr-2" />
                                 {addButton.label}
-                            </button>
+                            </Button>
+
                         )}
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }

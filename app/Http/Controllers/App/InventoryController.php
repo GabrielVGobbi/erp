@@ -50,7 +50,6 @@ class InventoryController extends Controller
      * Display a listing of the resource.
      *
      * @param  string|int  $id
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function show($id)
     {

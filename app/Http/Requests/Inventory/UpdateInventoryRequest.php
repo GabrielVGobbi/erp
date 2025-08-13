@@ -22,7 +22,17 @@ class UpdateInventoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required'
+            'name' => 'required',
+            'description' => 'nullable',
+            'sku' => 'required',
+            'unit' => 'required',
+            'ean' => 'nullable',
+            'code_ncm' => 'nullable',
+            'material_type' => 'required',
+            'length' => 'nullable',
+            'width' => 'nullable',
+            'height' => 'nullable',
+            'refueling_point' => 'nullable',
         ];
     }
 }

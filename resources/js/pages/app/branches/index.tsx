@@ -165,7 +165,6 @@ export default function BranchesIndex() {
 
     return (
         <AppLayout>
-            <Head title="Filiais " />
 
             <div className="max-w-7xl mx-auto">
                 <PageHeader
@@ -182,7 +181,7 @@ export default function BranchesIndex() {
                             columns={columns}
                             data={branches}
                             pageCount={1}
-                            apiEndpoint={route('table.branches')}
+                            apiEndpoint={'/tables/branches'}
                             searchColumn="name"
                             defaultPageSize={10}
                             onDataLoaded={setBranches}

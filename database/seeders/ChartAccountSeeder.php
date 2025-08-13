@@ -20,7 +20,6 @@ class ChartAccountSeeder extends Seeder
 
         $inserted = [];
 
-        // função recursiva de inserção
         $insertFn = function (array $items, $parentId = null) use (&$insertFn, &$inserted) {
             foreach ($items as $acct) {
                 $id = DB::table('chart_accounts')->insertGetId([

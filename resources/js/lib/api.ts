@@ -8,7 +8,7 @@ interface ValidationErrors {
 
 // Cria instância API
 const api: AxiosInstance = axios.create({
-    baseURL: '/api/',
+    baseURL: '/api/v1/',
     withCredentials: false,
 });
 
@@ -17,12 +17,12 @@ api.interceptors.request.use((config) => {
     const useToken = getAuthMode();
     const token = getToken();
 
-    if (useToken && token) {
-        config.headers.Authorization = `Bearer ${token}`;
-        config.withCredentials = false;
-    } else {
-        config.withCredentials = true;
-    }
+    //if (useToken && token) {
+    //    config.headers.Authorization = `Bearer ${token}`;
+    //    config.withCredentials = false;
+    //} else {
+    //    config.withCredentials = true;
+    //}
 
     return config;
 }, (error) => {
@@ -48,9 +48,9 @@ api.interceptors.response.use(
             if (status === 401) {
                 sessionStorage.removeItem('token');
                 toast.error('Sessão expirada! Redirecionando...');
-                setTimeout(() => {
-                    window.location.href = '/login';
-                }, 1500);
+                //setTimeout(() => {
+                //    window.location.href = '/login';
+                //}, 1500);
             }
 
             if (status >= 400 && status !== 422 && status !== 401) {

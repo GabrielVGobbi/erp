@@ -220,7 +220,6 @@ export default function AccountingEntriesIndex({ generalLedger, filters, chartAc
 
     return (
         <AppLayout>
-            <Head title="Livro Razão - Contabilidade" />
 
             <div className="container mx-auto space-y-6">
                 <PageHeader
