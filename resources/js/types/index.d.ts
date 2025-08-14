@@ -41,3 +41,28 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface Role {
+    id: number;
+    name: string;
+    slug: string;
+}
+
+export interface Permission {
+    id: number;
+    name: string;
+    slug: string;
+    module: string;
+}
+
+
+export interface UserData extends User {
+    roles: Role[];
+    permissions: Permission[];
+}
+
+export interface EditProps extends PageProps {
+    user: UserData;
+    roles: Role[];
+    permissions: Permission[];
+}

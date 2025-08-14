@@ -86,7 +86,7 @@ const CostCenterShow: React.FC<ShowProps> = ({ costCenterData, activities = [] }
         <AppLayout>
             <Head title={`Centro de Custo - ${costCenter.name}`} />
 
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-4xl mx-auto">
 
                 <DetailView
                     title={costCenter.name}

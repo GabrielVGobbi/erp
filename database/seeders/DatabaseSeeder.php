@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             AccountingEntrySeeder::class,
             CostCenterSeeder::class,
             InventorySeeder::class,
+            InventorySeeder::class,
+            PermissionsSeeder::class,
         ]);
     }
 }

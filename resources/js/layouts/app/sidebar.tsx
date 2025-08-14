@@ -20,7 +20,12 @@ import {
     HandCoins,
     Truck,
     ShoppingCart,
-    ShoppingBag
+    ShoppingBag,
+    UserCircle,
+    User,
+    SquareChartGantt,
+    SquareChevronRight,
+    FileChartColumnIncreasing
 } from "lucide-react"
 
 import { Home } from "lucide-react"
@@ -178,6 +183,18 @@ export default function Sidebar() {
                                     <NavItem href="/branches" icon={Folder}>
                                         Filiais
                                     </NavItem>
+                                    <CollapsibleNavItem
+                                        id="admin"
+                                        icon={UserCircle}
+                                        subItems={[
+                                            { href: "/acl/users", icon: User, label: "Usuários" },
+                                            { href: "/acl/permissions", icon: SquareChartGantt, label: "Permissões" },
+                                            { href: "/acl/roles", icon: SquareChevronRight, label: "Funções" },
+                                            { href: "/acl/reports", icon: FileChartColumnIncreasing, label: "Report" }
+                                        ]}
+                                    >
+                                        Admin
+                                    </CollapsibleNavItem>
                                 </div>
                             </div>
 

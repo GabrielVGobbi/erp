@@ -190,7 +190,7 @@ export default function FormView({
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
                 {sections.map((section, sectionIndex) => (
                     <Card key={sectionIndex} className={section.className}>
                         <CardHeader>
@@ -208,7 +208,7 @@ export default function FormView({
 
                                     if (field.type === 'checkbox') {
                                         return (
-                                            <div key={field.name} className={cn("space-y-2", colSpanClass)}>
+                                            <div key={field.name} className={cn("space-y-1", colSpanClass)}>
                                                 {renderField(field)}
                                                 {field.description && (
                                                     <p className="text-xs text-muted-foreground">{field.description}</p>
@@ -239,7 +239,7 @@ export default function FormView({
                             </div>
                         </CardContent>
 
-                        <CardContent className="pt-6">
+                        <CardContent className="pt-4">
                             <div className="flex items-center justify-end gap-4">
                                 {showCancelButton && backUrl && (
                                     <Link href={backUrl}>

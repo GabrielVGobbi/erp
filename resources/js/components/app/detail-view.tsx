@@ -85,8 +85,6 @@ export default function DetailView({
     const formatValue = (field: DetailField) => {
         const { value, type, render } = field;
 
-        console.log(value);
-
         if (render) {
             return render(value);
         }
@@ -231,6 +229,8 @@ function DetailFields({
     formatValue: (field: DetailField) => React.ReactNode;
     getFieldIcon: (field: DetailField) => React.ReactNode;
 }) {
+
+
     return (
         <Card>
             <CardHeader>
@@ -247,7 +247,7 @@ function DetailFields({
                                 </label>
                             </div>
                             <div className="text-sm font-medium">
-                                {formatValue({ ...field, value: data[field.key] })}
+                                {formatValue({ ...field, value: data[field?.key] })}
                             </div>
                         </div>
                     ))}

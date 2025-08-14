@@ -329,6 +329,8 @@ export function DataTableServer<TData, TValue>({
 
             const responseData = await response.json();
 
+            console.log(responseData);
+
             // Transformar a resposta se necessário ou usar o formato padrão
             const { data: tableData, meta } = transformResponse
                 ? transformResponse(responseData)
@@ -336,7 +338,7 @@ export function DataTableServer<TData, TValue>({
 
             // Atualizar os dados e a contagem de páginas
             setData(tableData);
-            setPageCount(meta.last_page);
+            setPageCount(data.last_page);
 
             // Notificar o componente pai se necessário
             if (onDataLoaded) {
