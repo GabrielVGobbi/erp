@@ -41,9 +41,9 @@ class ACLTablesApiController extends Controller
         }
 
         // Ordenação
-        $sortBy = $request->get('sort_by', 'name');
+        #$sortBy = $request->get('sort_by', 'name');
         $sortOrder = $request->get('sort_order', 'asc');
-        $query->orderBy($sortBy, $sortOrder);
+        $query->orderBy('id', $sortOrder);
 
         // Paginação
         $perPage = $request->get('per_page', 10);

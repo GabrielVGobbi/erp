@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Concerns\Models\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CostCenter extends Model
 {
     /** @use HasFactory<\Database\Factories\CostCenterFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes ;
 
     /**
      * The attributes that are mass assignable.
@@ -60,5 +61,10 @@ class CostCenter extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(CostCenter::class, 'parent_id');
+    }
+
+    public function scopeSearchable($query, $term)
+    {
+        return $query->where('name', 'like', "%{$term}%");
     }
 }

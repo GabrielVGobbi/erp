@@ -17,6 +17,7 @@ import {
 import { Head, Link, usePage } from '@inertiajs/react';
 import Sidebar from './app/sidebar';
 import Image from '@/components/app/image';
+import { Toaster, toast } from 'sonner';
 
 interface AppLayoutProps {
     children: ReactNode;
@@ -32,6 +33,7 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { props } = usePage();
 
     useEffect(() => {
         document.documentElement.classList.remove('dark')
@@ -39,6 +41,27 @@ export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps
             document.documentElement.classList.add('dark')
         }
     }, [])
+
+    // Handle flash messages
+    useEffect(() => {
+        const flash = props.flash as any;
+
+        if (flash?.success) {
+            toast.success(flash.success);
+        }
+
+        if (flash?.error) {
+            toast.error(flash.error);
+        }
+
+        if (flash?.warning) {
+            toast.warning(flash.warning);
+        }
+
+        if (flash?.info) {
+            toast.info(flash.info);
+        }
+    }, [props.flash])
 
     return (
         <div className="flex flex-col min-h-screen bg-background">
@@ -146,6 +169,7 @@ export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps
                     {children}
                 </main>
             </div>
+            <Toaster />
         </div>
     );
 }

@@ -251,11 +251,17 @@ function _log($modelName, Model $model, $causer, $logDescription = '', $attribut
         ->log($logDescription);
 }
 
-function validateDate($date, $format = 'd/m/Y')
+function validateDate($date, $formats = ['Y-m-d', 'd/m/Y'])
 {
-    $d = \DateTime::createFromFormat($format, $date);
-    return $d && $d->format($format) == $date;
+    foreach ($formats as $format) {
+        $d = \DateTime::createFromFormat($format, $date);
+        if ($d && $d->format($format) === $date) {
+            return true;
+        }
+    }
+    return false;
 }
+
 
 function clearNumberToSendWhats($number)
 {

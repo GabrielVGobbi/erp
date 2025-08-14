@@ -164,7 +164,6 @@ export default function OrganizationsIndex() {
 
     return (
         <AppLayout>
-            <Head title="Organizações / Empresa " />
 
             <div className="max-w-7xl mx-auto">
                 <PageHeader
@@ -181,7 +180,7 @@ export default function OrganizationsIndex() {
                             columns={columns}
                             data={organizations}
                             pageCount={1}
-                            apiEndpoint={route('table.organizations')}
+                            apiEndpoint={'/tables/organizations'}
                             searchColumn="name"
                             defaultPageSize={10}
                             onDataLoaded={setOrganizations}

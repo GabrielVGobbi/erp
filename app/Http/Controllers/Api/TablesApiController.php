@@ -8,13 +8,17 @@ use App\Http\Resources\BranchResource;
 use App\Http\Resources\CostCenterResource;
 use App\Http\Resources\InventoryResource;
 use App\Http\Resources\OrganizationResource;
+use App\Http\Resources\ProjectResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\AccountingEntries;
 use App\Models\Branch;
 use App\Models\CostCenter;
 use App\Models\Inventory;
 use App\Models\Organization;
+use App\Models\Project;
 use App\Models\Supplier;
+use App\Modules\Compras\Models\PurchaseRequisition;
+use App\Modules\Compras\Resources\PurchaseRequisitionResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -23,138 +27,115 @@ use Carbon\Carbon;
 
 class TablesApiController extends Controller
 {
-    protected $limit, $offset, $order, $search, $sort, $filter, $filters;
+    protected $limit, $order, $search, $sort, $filters;
+
+    // Define a map for available tables, their models, and resources
+    // This centralizes all the necessary information
+    protected $tableMap = [
+        'purchase-requisitions' => [
+            'model' => PurchaseRequisition::class,
+            'resource' => PurchaseRequisitionResource::class,
+            'with' => ['requisitor'],
+        ],
+        'projects' => [
+            'model' => Project::class,
+            'resource' => ProjectResource::class,
+            'with' => [],
+        ],
+        'inventories' => [
+            'model' => Inventory::class,
+            'resource' => InventoryResource::class,
+            'with' => [],
+        ],
+        'cost-centers' => [
+            'model' => CostCenter::class,
+            'resource' => CostCenterResource::class,
+            'with' => ['parent', 'organization'],
+        ],
+        'accounting-entries' => [
+            'model' => AccountingEntries::class,
+            'resource' => AccountingEntriesResource::class,
+            'with' => [],
+        ],
+        'suppliers' => [
+            'model' => Supplier::class,
+            'resource' => SupplierResource::class,
+            'with' => [],
+        ],
+        'organizations' => [
+            'model' => Organization::class,
+            'resource' => OrganizationResource::class,
+            'with' => [],
+        ],
+        'branches' => [
+            'model' => Branch::class,
+            'resource' => BranchResource::class,
+            'with' => ['organization'],
+        ],
+    ];
 
     public function __construct(Request $request)
     {
-        $this->limit = $request->input('pageSize') ?? '30';
+        $this->limit = $request->input('per_page') ?? 30;
         $this->order = $request->input('order') ?? 'asc';
-        $this->offset = $request->input('offset') ?? 0;
         $this->search = $request->input('search') ?? '';
         $this->sort = $request->input('sort') ?? 'id';
-        $this->filter = $request->input('filter') ?? [];
         $this->filters = $request->input('filters') ?? [];
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the specified resource.
+     * @param string $tableName
      */
-    public function inventories()
+    public function index(string $tableName)
     {
-        $inventories = new Inventory();
-
-        $inventories = $inventories->orderBy($this->sort, $this->order);
-
-        $inventories = $this->limit == 'all' ? $inventories->get() : $inventories->paginate($this->limit);
-
-        return InventoryResource::collection($inventories);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function costCenters()
-    {
-        $costCenter = new CostCenter();
-
-        $costCenter = $costCenter->with(['parent', 'organization'])->orderBy($this->sort, $this->order);
-
-        $costCenter = $this->limit == 'all' ? $costCenter->get() : $costCenter->paginate($this->limit);
-
-        return CostCenterResource::collection($costCenter);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function accountingEntries()
-    {
-        $accountingEntries = new AccountingEntries();
-
-        $accountingEntries = $accountingEntries->orderBy($this->sort, $this->order);
-
-        $accountingEntries = $this->limit == 'all' ? $accountingEntries->get() : $accountingEntries->paginate($this->limit);
-
-        return AccountingEntriesResource::collection($accountingEntries);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function suppliers()
-    {
-        $suppliers = new Supplier();
-
-        $suppliers = $suppliers->orderBy($this->sort, $this->order);
-
-        $suppliers = $this->limit == 'all' ? $suppliers->get() : $suppliers->paginate($this->limit);
-
-        return SupplierResource::collection($suppliers);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function organizations()
-    {
-        $organizations = new Organization();
-
-        $organizations = $organizations->orderBy($this->sort, $this->order);
-
-        $organizations = $this->limit == 'all' ? $organizations->get() : $organizations->paginate($this->limit);
-
-        return OrganizationResource::collection($organizations);
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function branches()
-    {
-        $branches = new Branch();
-
-        $branches = $branches->with('organization')->orderBy($this->sort, $this->order);
-
-        $branches = $this->limit == 'all' ? $branches->get() : $branches->paginate($this->limit);
-
-        return BranchResource::collection($branches);
-    }
-
-    /**
-     * Display query for DB.
-     * @param  array  $searchColumns colunas que podem ser pesquisadas
-     * @param  array  $withCount
-     */
-    private function get(Model $model, $with = [], $where = [], $whereHas = [])
-    {
-        if ($this->sort == 'idi') {
-            $this->sort = 'id';
+        // 1. Validate if the requested table exists in the map
+        if (!array_key_exists($tableName, $this->tableMap)) {
+            return response()->json(['error' => 'Table not found.'], 404);
         }
 
-        $this->filter = array_merge(['search' => $this->search], $this->filter);
+        $config = $this->tableMap[$tableName];
+        $model = new $config['model'];
 
-        $model = $model
-            ->filtered($this->filter)
-            ->orderBy($this->sort, $this->order);
+        // 2. Build the query dynamically
+        $query = $model::query();
 
-        if (!empty($with)) {
-            $model->with($with);
+        // Eager load relationships if any are defined
+        if (!empty($config['with'])) {
+            $query->with($config['with']);
         }
 
-        if (!empty($where)) {
-            foreach ($where as $w => $value) {
-                $model->where($w, $value);
+        // Apply search if a term is provided
+        if ($this->search) {
+            // You'll need to add a 'searchable' scope to your models
+            // For example: `public function scopeSearchable($query, $term) { ... }`
+            $query->searchable($this->search);
+        }
+
+        // Apply filters
+        if (!empty($this->filters)) {
+            foreach ($this->filters as $column => $value) {
+                if ($value !== null && $value !== '') {
+                    $query->where($column, $value);
+                }
             }
         }
 
-        if (!empty($whereHas)) {
-            foreach ($whereHas as $w) {
-                $model->whereHas($w);
-            }
-        }
+        // Apply sorting
+        $query->orderBy($this->sort, $this->order);
 
-        #dd([$model->toSql(), $model->getBindings()]);
+        $results = ($this->limit === 'all')
+            ? $query->get()
+            : $query->paginate($this->limit)->appends([
+                'sort' => $this->sort,
+                'order' => $this->order,
+                'search' => $this->search,
+                'filters' => $this->filters,
+            ]);
 
-        return $this->limit == 'all' ? $model->get() : $model->paginate($this->limit);
+        // 4. Use the correct Resource class to transform the data
+        $resourceClass = $config['resource'];
+
+        return $resourceClass::collection($results);
     }
 }

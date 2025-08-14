@@ -1,13 +1,17 @@
 <?php
 
 use App\Http\Controllers\AccountingEntryController;
+use App\Http\Controllers\Api\TablesApiController;
 use App\Http\Controllers\App\HomeController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChartAccountController;
 use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\App\InventoryController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Middleware\MultiAuthMiddleware;
+use App\Modules\Compras\Http\PurchaseRequisitionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,7 +23,7 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware([MultiAuthMiddleware::class])->group(function () {
 
     Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
@@ -30,20 +34,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('accounting-entries', AccountingEntryController::class);
     Route::resource('cost-centers', CostCenterController::class);
     Route::resource('inventories', InventoryController::class);
+    Route::resource('purchase-requisitions', PurchaseRequisitionController::class);
+    Route::resource('projects', ProjectController::class);
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
-            Route::get('organizations', [App\Http\Controllers\Api\TablesApiController::class, 'organizations'])->name('organizations');
-            Route::get('branches', [App\Http\Controllers\Api\TablesApiController::class, 'branches'])->name('branches');
-            Route::get('suppliers', [App\Http\Controllers\Api\TablesApiController::class, 'suppliers'])->name('suppliers');
-            Route::get('accounting-entries', [App\Http\Controllers\Api\TablesApiController::class, 'accountingEntries'])->name('accountingEntries');
-            Route::get('costCenters', [App\Http\Controllers\Api\TablesApiController::class, 'costCenters'])->name('costCenters');
-            Route::get('inventories', [App\Http\Controllers\Api\TablesApiController::class, 'inventories'])->name('inventories');
-
-            // ACL Tables
             Route::get('users', [App\Http\Controllers\Api\ACLTablesApiController::class, 'users'])->name('users');
             Route::get('roles', [App\Http\Controllers\Api\ACLTablesApiController::class, 'roles'])->name('roles');
             Route::get('permissions', [App\Http\Controllers\Api\ACLTablesApiController::class, 'permissions'])->name('permissions');
+            Route::get('{tableName}', [TablesApiController::class, 'index'])->name('index');
         }
     );
 });

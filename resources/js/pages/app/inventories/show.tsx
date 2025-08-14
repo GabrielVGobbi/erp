@@ -78,12 +78,24 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
         },
     ];
     const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState(inventory);
+    const [formData, setFormData] = useState({
+        ...inventory,
+        description: inventory.description || '',
+        ean: inventory.ean || '',
+        code_ncm: inventory.code_ncm || '',
+        length: inventory.length || 0,
+        width: inventory.width || 0,
+        height: inventory.height || 0,
+        market_price: inventory.market_price || 0,
+        last_buy_price: inventory.last_buy_price || 0,
+        sale_price: inventory.sale_price || 0,
+        refueling_point: inventory.refueling_point || 0,
+    });
     const [activeTab, setActiveTab] = useState('details');
 
     const handleSave = () => {
 
-        router.put(route('inventories.update', { inventory: inventory.id }), formData as any, {
+        router.put(route('inventories.update', { inventory: inventory.id }), formData as unknown, {
             onSuccess: () => {
                 setIsEditing(false);
             }
@@ -91,7 +103,19 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
     };
 
     const handleCancel = () => {
-        setFormData(inventory);
+        setFormData({
+            ...inventory,
+            description: inventory.description || '',
+            ean: inventory.ean || '',
+            code_ncm: inventory.code_ncm || '',
+            length: inventory.length || 0,
+            width: inventory.width || 0,
+            height: inventory.height || 0,
+            market_price: inventory.market_price || 0,
+            last_buy_price: inventory.last_buy_price || 0,
+            sale_price: inventory.sale_price || 0,
+            refueling_point: inventory.refueling_point || 0,
+        });
         setIsEditing(false);
     };
 
@@ -213,7 +237,7 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm font-medium">Status:</span>
-                                    <Badge variant={stockStatus.color as any}>
+                                    <Badge variant={stockStatus.color as unknown}>
                                         {stockStatus.status === 'out' && <AlertTriangle className="w-3 h-3 mr-1" />}
                                         {stockStatus.status === 'low' && <AlertTriangle className="w-3 h-3 mr-1" />}
                                         {stockStatus.status === 'ok' && <CheckCircle className="w-3 h-3 mr-1" />}
@@ -383,29 +407,11 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                             <div className="space-y-2">
                                                 <Label htmlFor="stock">Estoque Atual</Label>
-                                                {isEditing ? (
-                                                    <Input
-                                                        id="stock"
-                                                        type="number"
-                                                        value={formData.stock}
-                                                        onChange={(e) => setFormData({ ...formData, stock: Number(e.target.value) })}
-                                                    />
-                                                ) : (
-                                                    <p className="text-sm text-gray-600 dark:text-gray-400">{formData.stock}</p>
-                                                )}
+                                                <p className="text-sm text-gray-600 dark:text-gray-400">{formData.stock}</p>
                                             </div>
                                             <div className="space-y-2">
                                                 <Label htmlFor="opening_stock">Estoque Inicial</Label>
-                                                {isEditing ? (
-                                                    <Input
-                                                        id="opening_stock"
-                                                        type="number"
-                                                        value={formData.opening_stock}
-                                                        onChange={(e) => setFormData({ ...formData, opening_stock: Number(e.target.value) })}
-                                                    />
-                                                ) : (
-                                                    <p className="text-sm text-gray-600 dark:text-gray-400">{formData.opening_stock}</p>
-                                                )}
+                                                <p className="text-sm text-gray-600 dark:text-gray-400">{formData.opening_stock}</p>
                                             </div>
                                             <div className="space-y-2">
                                                 <Label htmlFor="refueling_point">Ponto de Reposição</Label>
@@ -413,7 +419,7 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
                                                     <Input
                                                         id="refueling_point"
                                                         type="number"
-                                                        value={formData.refueling_point}
+                                                        value={formData.refueling_point || ''}
                                                         onChange={(e) => setFormData({ ...formData, refueling_point: Number(e.target.value) })}
                                                     />
                                                 ) : (
@@ -481,7 +487,7 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
                                                             id="length"
                                                             type="number"
                                                             step="0.01"
-                                                            value={formData.length}
+                                                            value={formData.length || ''}
                                                             onChange={(e) => setFormData({ ...formData, length: Number(e.target.value) })}
                                                         />
                                                     ) : (
@@ -495,7 +501,7 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
                                                             id="width"
                                                             type="number"
                                                             step="0.01"
-                                                            value={formData.width}
+                                                            value={formData.width || ''}
                                                             onChange={(e) => setFormData({ ...formData, width: Number(e.target.value) })}
                                                         />
                                                     ) : (
@@ -509,7 +515,7 @@ const InventoryShow: React.FC<ShowProps> = ({ inventory }) => {
                                                             id="height"
                                                             type="number"
                                                             step="0.01"
-                                                            value={formData.height}
+                                                            value={formData.height || ''}
                                                             onChange={(e) => setFormData({ ...formData, height: Number(e.target.value) })}
                                                         />
                                                     ) : (

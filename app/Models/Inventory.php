@@ -17,6 +17,7 @@ class Inventory extends Model
      */
     protected $fillable = [
         'name',
+        'description',
         'sku',
         'unit',
         'ean',
@@ -56,4 +57,15 @@ class Inventory extends Model
     }
 
     protected $appends = [];
+
+    public function scopeSearchable($query, $term)
+    {
+        return $query->where(function ($query) use ($term) {
+            $query->where('name', 'like', '%' . $term . '%');
+            $query->orWhere('sku', 'like', '%' . $term . '%');
+            $query->orWhere('ean', 'like', '%' . $term . '%');
+            $query->orWhere('code_ncm', 'like', '%' . $term . '%');
+            $query->orWhere('material_type', 'like', '%' . $term . '%');
+        });
+    }
 }

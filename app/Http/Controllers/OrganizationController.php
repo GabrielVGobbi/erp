@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Organizations\StoreOrganizationRequest;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,10 +33,10 @@ class OrganizationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreUpdateOrganization $request
+     * @param StoreOrganizationRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreUpdateOrganization $request)
+    public function store(StoreOrganizationRequest $request)
     {
         $organization = Organization::create($request->validated());
 
@@ -77,11 +78,11 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param StoreUpdateOrganization $request
+     * @param StoreOrganizationRequest $request
      * @param Organization $organization
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreUpdateOrganization $request, Organization $organization)
+    public function update(StoreOrganizationRequest $request, Organization $organization)
     {
         $organization->update($request->validated());
 

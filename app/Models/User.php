@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Modules\ACL\Models\Permission;
 use App\Modules\ACL\Models\Role;
+use App\Supports\Traits\GenerateUuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens, HasPermissionsTrait, SoftDeletes;
+    use HasFactory, Notifiable, HasApiTokens, HasPermissionsTrait, SoftDeletes, GenerateUuidTrait;
 
     /**
      * The attributes that are mass assignable.
