@@ -212,7 +212,7 @@ export default function Sidebar() {
                                     <NavItem href="/cost-centers" icon={Wallet}>
                                         Centro de Custo
                                     </NavItem>
-                                    <NavItem href="#" icon={Receipt}>
+                                    <NavItem href="/business-units" icon={Receipt}>
                                         Unidades de Negócio
                                     </NavItem>
 

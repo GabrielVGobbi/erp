@@ -408,7 +408,7 @@ export default function PurchaseRequisitionsCreate() {
                                 <CardContent>
                                     {data.type === 'project' && (
                                         <AsyncSelect
-                                            endpoint="/tables/projects" // ajuste quando existir endpoint de projetos
+                                            endpoint="/tables/projects"
                                             multiple={false}
                                             value={data.project_id ? String(data.project_id) : null}
                                             onChange={(val) => setData('project_id', typeof val === 'string' ? parseInt(val) : undefined)}
@@ -430,7 +430,7 @@ export default function PurchaseRequisitionsCreate() {
 
                                     {data.type === 'business_unit' && (
                                         <AsyncSelect
-                                            endpoint="/tables/branches" // exemplo de unidade de negócio assumindo branches
+                                            endpoint="/tables/business-units"
                                             multiple
                                             value={data.business_unit_ids.map(String)}
                                             onChange={(val) => setData('business_unit_ids', Array.isArray(val) ? val.map((v) => parseInt(v)) : [])}

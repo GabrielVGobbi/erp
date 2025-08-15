@@ -19,7 +19,7 @@ class InventorySeeder extends Seeder
             true
         );
 
-        $inventories = array_slice($inventories, 0, 1000);
+        $inventories = array_slice($inventories, 0, 100);
 
         $inserted = [];
 

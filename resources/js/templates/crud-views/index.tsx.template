@@ -1,0 +1,153 @@
+import React, { useState } from 'react';
+import AppLayout from '@/layouts/app-layout';
+import PageHeader from '@/components/app/page-header';
+import { type BreadcrumbItem } from '@/types';
+import { Head } from '@inertiajs/react';
+import { {{ICON_IMPORT}}, Eye, Edit, Trash2, Plus } from 'lucide-react';
+import {
+    DataTableServer,
+    createAdvancedActionsColumn,
+    createSelectionColumn,
+    createSortableColumn,
+    createDateColumn,
+    CustomFilter,
+} from '@/components/ui/data-table-server';
+import { ColumnDef } from '@tanstack/react-table';
+import { router } from '@inertiajs/react';
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: route('dashboard'),
+    },
+    {
+        title: '{{MODULE_NAME}}',
+        href: '#',
+    },
+    {
+        title: '{{PLURAL_NAME}}',
+        href: route('{{ROUTE_PREFIX}}.index'),
+    },
+];
+
+interface {{MODEL_NAME}}Data {
+    id: string;
+    {{MAIN_FIELD}}: string;
+    // TODO: Adicionar outros campos conforme necessário
+    created_at: string;
+    updated_at: string;
+}
+
+export default function {{MODEL_NAME}}Index() {
+    const [{{VARIABLE_NAME_PLURAL}}, set{{MODEL_NAME}}s] = useState<{{MODEL_NAME}}Data[]>([]);
+    const totalRecords = {{VARIABLE_NAME_PLURAL}}.length;
+    const [refetchTrigger, setRefetchTrigger] = useState(0);
+
+    const refreshTable = React.useCallback(() => {
+        setRefetchTrigger(prev => prev + 1);
+    }, []);
+
+    const columns = React.useMemo<ColumnDef<{{MODEL_NAME}}Data>[]>(() => [
+        createSelectionColumn<{{MODEL_NAME}}Data>(),
+        createSortableColumn<{{MODEL_NAME}}Data>('{{MAIN_FIELD_LABEL}}', '{{MAIN_FIELD}}'),
+        // TODO: Adicionar outras colunas conforme necessário
+        createDateColumn<{{MODEL_NAME}}Data>('Criado em', 'created_at'),
+        createAdvancedActionsColumn<{{MODEL_NAME}}Data>({
+            groups: [
+                {
+                    label: 'Visualização',
+                    actions: [
+                        {
+                            label: 'Visualizar',
+                            icon: <Eye className="w-4 h-4" />,
+                            type: 'link',
+                            href: ({{VARIABLE_NAME}}: {{MODEL_NAME}}Data) => route('{{ROUTE_PREFIX}}.show', {{VARIABLE_NAME}}.id)
+                        }
+                    ]
+                },
+                {
+                    label: 'Ações',
+                    actions: [
+                        {
+                            label: 'Editar',
+                            icon: <Edit className="w-4 h-4" />,
+                            type: 'link',
+                            href: ({{VARIABLE_NAME}}: {{MODEL_NAME}}Data) => route('{{ROUTE_PREFIX}}.edit', {{VARIABLE_NAME}}.id)
+                        }
+                    ],
+                    separator: true
+                },
+                {
+                    label: 'Zona de Perigo',
+                    actions: [
+                        {
+                            label: 'Excluir',
+                            icon: <Trash2 className="w-4 h-4" />,
+                            type: 'confirm',
+                            variant: 'destructive',
+                            confirmTitle: 'Confirmar exclusão',
+                            confirmDescription: 'Tem certeza que deseja excluir este {{SINGULAR_NAME_LOWER}}? Esta ação não pode ser desfeita.',
+                            confirmButtonText: 'Excluir',
+                            onClick: async ({{VARIABLE_NAME}}: {{MODEL_NAME}}Data, onRefresh) => {
+                                try {
+                                    await router.delete(route('{{ROUTE_PREFIX}}.destroy', {{VARIABLE_NAME}}.id));
+                                    if (onRefresh) {
+                                        onRefresh();
+                                    }
+                                } catch (error) {
+                                    console.error('Erro ao excluir:', error);
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            onRefresh: refreshTable
+        }),
+    ], [refreshTable]);
+
+    const customFilters: CustomFilter[] = [
+        // TODO: Adicionar filtros personalizados conforme necessário
+    ];
+
+    return (
+        <AppLayout>
+            <Head title="{{PLURAL_NAME}}" />
+
+            <div className="max-w-7xl mx-auto">
+                <PageHeader
+                    title="{{PLURAL_NAME}}"
+                    description="Gerencie {{PLURAL_NAME_LOWER}} do sistema"
+                    breadcrumbs={breadcrumbs}
+                    totalRecords={totalRecords}
+                    actions={[
+                        {
+                            label: 'Novo {{SINGULAR_NAME}}',
+                            href: route('{{ROUTE_PREFIX}}.create'),
+                            icon: <Plus className="w-4 h-4" />,
+                            variant: 'default'
+                        }
+                    ]}
+                />
+
+                <div className="space-y-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <DataTableServer
+                            columns={columns}
+                            data={{{VARIABLE_NAME_PLURAL}}}
+                            pageCount={1}
+                            apiEndpoint={route('table.{{TABLE_NAME}}')}
+                            searchColumn="{{MAIN_FIELD}}"
+                            defaultPageSize={10}
+                            onDataLoaded={set{{MODEL_NAME}}s}
+                            customFilters={customFilters}
+                            storageKey="{{TABLE_NAME}}-table"
+                            enableLocalStorage={true}
+                            refetchTrigger={refetchTrigger}
+                        />
+                    </div>
+                </div>
+            </div>
+        </AppLayout>
+    );
+}

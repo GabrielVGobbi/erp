@@ -80,8 +80,8 @@ class GenerateCrud extends Command
         // 7. Routes
         $this->createRoute($variablePlural, $nameSingular);
 
-        // 8. Views
-        //$this->createViews($nameSingular, $variableSingular);
+        // 8. Views React
+        $this->createReactViews($nameSingular, $variableSingular, $namePlural, $variablePlural);
 
         $this->info("CRUD completo gerado com sucesso para {$nameSingular}!");
     }
@@ -218,6 +218,93 @@ class GenerateCrud extends Command
 
             $filesystem->put($viewPath, $stub);
             $this->info("View '{$stubType}' criada em {$viewPath}.");
+        }
+    }
+
+    private function createReactViews($nameSingular, $variableSingular, $namePlural, $variablePlural)
+    {
+        $filesystem = new Filesystem();
+        $templateDir = resource_path('js/templates/crud-views');
+        $viewDir = resource_path("js/pages/app/{$variablePlural}");
+
+        // Criar diretório das views se não existir
+        if (!$filesystem->exists($viewDir)) {
+            $filesystem->makeDirectory($viewDir, 0755, true);
+            $this->info("Diretório de views React criado em: {$viewDir}");
+        }
+
+        // Definir os replacements para os templates
+        $kebabCaseName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $nameSingular));
+        $mainField = 'name'; // Campo principal padrão - pode ser customizado
+        $mainFieldLabel = 'Nome';
+        $mainFieldLabelLower = 'nome';
+        $iconImport = 'Package'; // Ícone padrão - pode ser customizado
+        $moduleName = ucfirst($variablePlural);
+        $routePrefix = $variablePlural;
+        $tableName = $variablePlural;
+
+        $replacements = [
+            '{{MODEL_NAME}}' => $nameSingular,
+            '{{VARIABLE_NAME}}' => $variableSingular,
+            '{{VARIABLE_NAME_PLURAL}}' => $variablePlural,
+            '{{PLURAL_NAME}}' => $namePlural,
+            '{{PLURAL_NAME_LOWER}}' => strtolower($namePlural),
+            '{{SINGULAR_NAME}}' => $nameSingular,
+            '{{SINGULAR_NAME_LOWER}}' => strtolower($nameSingular),
+            '{{KEBAB_CASE_NAME}}' => $kebabCaseName,
+            '{{MAIN_FIELD}}' => $mainField,
+            '{{MAIN_FIELD_LABEL}}' => $mainFieldLabel,
+            '{{MAIN_FIELD_LABEL_LOWER}}' => $mainFieldLabelLower,
+            '{{ICON_IMPORT}}' => $iconImport,
+            '{{MODULE_NAME}}' => $moduleName,
+            '{{ROUTE_PREFIX}}' => $routePrefix,
+            '{{TABLE_NAME}}' => $tableName,
+        ];
+
+        // Templates a serem criados
+        $templates = [
+            'index.tsx.template' => 'index.tsx',
+            'create.tsx.template' => 'create.tsx',
+            'edit.tsx.template' => 'edit.tsx',
+            'show.tsx.template' => 'show.tsx',
+            'form.tsx.template' => "{$kebabCaseName}-form.tsx",
+        ];
+
+        foreach ($templates as $templateFile => $outputFile) {
+            $templatePath = "{$templateDir}/{$templateFile}";
+            $outputPath = "{$viewDir}/{$outputFile}";
+
+            if (!$filesystem->exists($templatePath)) {
+                $this->error("Template '{$templateFile}' não encontrado em {$templatePath}.");
+                continue;
+            }
+
+            // Ler o template
+            $content = $filesystem->get($templatePath);
+
+            // Aplicar os replacements
+            foreach ($replacements as $placeholder => $replacement) {
+                $content = str_replace($placeholder, $replacement, $content);
+            }
+
+            // Salvar o arquivo
+            $filesystem->put($outputPath, $content);
+            $this->info("View React '{$outputFile}' criada em {$outputPath}.");
+        }
+
+        // Criar informações adicionais para o usuário
+        $this->line('');
+        $this->info('📝 Views React criadas com sucesso!');
+        $this->line('');
+        $this->comment('🔧 Próximos passos para personalizar:');
+        $this->line("1. Edite o arquivo '{$kebabCaseName}-form.tsx' para adicionar os campos específicos do modelo");
+        $this->line("2. Atualize os templates conforme necessário (campo principal, ícone, etc.)");
+        $this->line("3. Adicione as rotas no arquivo de rotas apropriado");
+        $this->line("4. Crie o endpoint da API para a tabela em TablesApiController");
+        $this->line('');
+        $this->comment('📁 Arquivos criados:');
+        foreach ($templates as $templateFile => $outputFile) {
+            $this->line("   - {$outputFile}");
         }
     }
 }

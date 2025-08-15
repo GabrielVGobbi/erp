@@ -8,6 +8,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ChartAccountController;
 use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\App\InventoryController;
+use App\Http\Controllers\BusinessUnitController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Middleware\MultiAuthMiddleware;
@@ -36,6 +37,7 @@ Route::middleware([MultiAuthMiddleware::class])->group(function () {
     Route::resource('inventories', InventoryController::class);
     Route::resource('purchase-requisitions', PurchaseRequisitionController::class);
     Route::resource('projects', ProjectController::class);
+    Route::resource('business-units', BusinessUnitController::class);
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
@@ -50,3 +52,6 @@ Route::middleware([MultiAuthMiddleware::class])->group(function () {
 require __DIR__ . '/settings.php';
 require __DIR__ . '/acl.php';
 require __DIR__ . '/auth.php';
+
+Route::resource('products', 'ProductController');
+

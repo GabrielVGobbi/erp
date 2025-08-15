@@ -1,4 +1,4 @@
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
 import { Search, Bell, Home, Workflow, BarChart3, Settings, Users, Database, ArrowRight, Menu } from "lucide-react"
 import { type BreadcrumbItem } from '@/types';
@@ -42,26 +42,23 @@ export default function AppLayout({ children, breadcrumbs = [] }: AppLayoutProps
         }
     }, [])
 
-    // Handle flash messages
     useEffect(() => {
         const flash = props.flash as any;
+        if (flash?.success) toast.success(flash.success);
+        if (flash?.error) toast.error(flash.error);
+        if (flash?.warning) toast.warning(flash.warning);
+        if (flash?.info) toast.info(flash.info);
+    }, [props.flash]);
 
-        if (flash?.success) {
-            toast.success(flash.success);
-        }
+    useEffect(() => {
+        const errors = props.errors as Record<string, string>;
 
-        if (flash?.error) {
-            toast.error(flash.error);
+        if (errors && Object.keys(errors).length > 0) {
+            Object.values(errors).forEach((message) => {
+                toast.error(message);
+            });
         }
-
-        if (flash?.warning) {
-            toast.warning(flash.warning);
-        }
-
-        if (flash?.info) {
-            toast.info(flash.info);
-        }
-    }, [props.flash])
+    }, [props.errors]);
 
     return (
         <div className="flex flex-col min-h-screen bg-background">

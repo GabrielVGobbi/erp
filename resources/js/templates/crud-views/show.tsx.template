@@ -1,0 +1,186 @@
+import React, { useState } from 'react';
+import AppLayout from '@/layouts/app-layout';
+import { Head, router } from '@inertiajs/react';
+import { type BreadcrumbItem } from '@/types';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import {
+    Edit,
+    Trash2,
+    {{ICON_IMPORT}},
+    Calendar,
+    ArrowLeft,
+    Info
+} from 'lucide-react';
+
+interface {{MODEL_NAME}} {
+    id: number;
+    {{MAIN_FIELD}}: string;
+    // TODO: Adicionar outros campos conforme necessário
+    created_at: string;
+    updated_at: string;
+}
+
+interface ShowProps {
+    {{VARIABLE_NAME}}: {{MODEL_NAME}};
+}
+
+export default function Show{{MODEL_NAME}}({ {{VARIABLE_NAME}} }: ShowProps) {
+    const [activeTab, setActiveTab] = useState("details");
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: 'Dashboard',
+            href: route('dashboard'),
+        },
+        {
+            title: '{{MODULE_NAME}}',
+            href: '#',
+        },
+        {
+            title: '{{PLURAL_NAME}}',
+            href: route('{{ROUTE_PREFIX}}.index'),
+        },
+        {
+            title: {{VARIABLE_NAME}}.{{MAIN_FIELD}},
+            href: '#',
+        },
+    ];
+
+    const handleDelete = () => {
+        if (confirm('Tem certeza que deseja excluir este {{SINGULAR_NAME_LOWER}}? Esta ação não pode ser desfeita.')) {
+            router.delete(route('{{ROUTE_PREFIX}}.destroy', {{VARIABLE_NAME}}.id));
+        }
+    };
+
+    return (
+        <AppLayout>
+            <Head title={{{VARIABLE_NAME}}.{{MAIN_FIELD}}} />
+
+            <div className="max-w-6xl mx-auto space-y-6">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                    <div>
+                        <div className="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                            {breadcrumbs.map((item, index) => (
+                                <React.Fragment key={index}>
+                                    {index > 0 && <span>/</span>}
+                                    <span>{item.title}</span>
+                                </React.Fragment>
+                            ))}
+                        </div>
+                        <h1 className="text-3xl font-bold text-gray-900">{{{VARIABLE_NAME}}.{{MAIN_FIELD}}}</h1>
+                        <p className="text-gray-600 mt-1">
+                            {{SINGULAR_NAME}} • ID: {{{VARIABLE_NAME}}.id}
+                        </p>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                        <Button
+                            variant="outline"
+                            onClick={() => router.visit(route('{{ROUTE_PREFIX}}.index'))}
+                        >
+                            <ArrowLeft className="w-4 h-4 mr-2" />
+                            Voltar
+                        </Button>
+                        <Button
+                            variant="outline"
+                            onClick={() => router.visit(route('{{ROUTE_PREFIX}}.edit', {{VARIABLE_NAME}}.id))}
+                        >
+                            <Edit className="w-4 h-4 mr-2" />
+                            Editar
+                        </Button>
+                        <Button
+                            variant="destructive"
+                            onClick={handleDelete}
+                        >
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Excluir
+                        </Button>
+                    </div>
+                </div>
+
+                {/* Info Card */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center space-x-2">
+                            <{{ICON_IMPORT}} className="w-5 h-5" />
+                            <span>Informações do {{SINGULAR_NAME}}</span>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div>
+                                <label className="text-sm font-medium text-gray-500">{{MAIN_FIELD_LABEL}}</label>
+                                <p className="text-gray-900 font-medium">{{{VARIABLE_NAME}}.{{MAIN_FIELD}}}</p>
+                            </div>
+                            {/* TODO: Adicionar outros campos conforme necessário */}
+                            <div>
+                                <label className="text-sm font-medium text-gray-500">Criado em</label>
+                                <p className="text-gray-900">{new Date({{VARIABLE_NAME}}.created_at).toLocaleDateString('pt-BR')}</p>
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium text-gray-500">Atualizado em</label>
+                                <p className="text-gray-900">{new Date({{VARIABLE_NAME}}.updated_at).toLocaleDateString('pt-BR')}</p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Tabs */}
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="details" className="flex items-center space-x-2">
+                            <Info className="w-4 h-4" />
+                            <span>Detalhes</span>
+                        </TabsTrigger>
+                        <TabsTrigger value="history" className="flex items-center space-x-2">
+                            <Calendar className="w-4 h-4" />
+                            <span>Histórico</span>
+                        </TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="details" className="space-y-4">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Detalhes do {{SINGULAR_NAME}}</CardTitle>
+                                <CardDescription>
+                                    Informações detalhadas sobre este {{SINGULAR_NAME_LOWER}}
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {/* TODO: Adicionar conteúdo específico do modelo */}
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="text-sm font-medium text-gray-500">{{MAIN_FIELD_LABEL}}</label>
+                                        <p className="text-gray-900">{{{VARIABLE_NAME}}.{{MAIN_FIELD}}}</p>
+                                    </div>
+                                    {/* Adicionar mais campos conforme necessário */}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+
+                    <TabsContent value="history" className="space-y-4">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Histórico de Alterações</CardTitle>
+                                <CardDescription>
+                                    Registro de alterações realizadas neste {{SINGULAR_NAME_LOWER}}
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="text-center py-12">
+                                    <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                                    <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum histórico disponível</h3>
+                                    <p className="text-gray-500">O histórico de alterações será exibido aqui quando disponível.</p>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                </Tabs>
+            </div>
+        </AppLayout>
+    );
+}

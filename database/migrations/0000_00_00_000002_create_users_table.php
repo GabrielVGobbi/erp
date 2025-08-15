@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
+            $table->foreignId('organization_id')->default(1)->constrained('organizations')->onDelete('cascade');
 
             $table->string('name');
             $table->string('email')->unique();
@@ -24,6 +25,9 @@ return new class extends Migration
 
             $table->SoftDeletes();
             $table->timestamps();
+
+            $table->index(['organization_id', 'name', 'email'], 'idx_users_account');
+
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

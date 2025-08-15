@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::forceCreate([
+            'organization_id' => '1',
             'name' => 'Admin',
             'email' => 'super@admin.com',
             'password' => 'superadmin',

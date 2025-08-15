@@ -1,33 +1,12 @@
 import React from 'react';
-import { Head, useForm, Link, PageProps } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import FormView, { FormSection } from '@/components/app/form-view';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import clsx from 'clsx'
 import { Button } from '@/components/ui/button';
-import UserForm from './user-form';
+import {{MODEL_NAME}}Form from './{{KEBAB_CASE_NAME}}-form';
 import { Save } from 'lucide-react';
 import BackButton from '@/components/ui/back-button';
-
-interface Role {
-    id: number;
-    name: string;
-    slug: string;
-}
-
-interface Permission {
-    id: number;
-    name: string;
-    slug: string;
-    module: string;
-}
-
-interface FormProps extends PageProps {
-    roles: Role[];
-    permissions: Permission[];
-}
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,65 +14,56 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('dashboard'),
     },
     {
-        title: 'ACL',
+        title: '{{MODULE_NAME}}',
         href: '#',
     },
     {
-        title: 'Usuários',
-        href: route('acl.users.index'),
+        title: '{{PLURAL_NAME}}',
+        href: route('{{ROUTE_PREFIX}}.index'),
     },
     {
-        title: 'Novo Usuário',
+        title: 'Novo {{SINGULAR_NAME}}',
         href: '#',
     },
 ];
 
-export default function CreateUser() {
-
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+export default function Create{{MODEL_NAME}}() {
+    const { data, setData, post, processing, errors } = useForm({
+        {{MAIN_FIELD}}: '',
+        // TODO: Adicionar outros campos conforme necessário
         create_and_new: false,
     });
 
     const submit = (e) => {
         e.preventDefault();
         setData('create_and_new', false);
-        post(route('acl.users.store'), {
-            onSuccess: () => {
-                reset();
-            },
-        });
+        post(route('{{ROUTE_PREFIX}}.store'));
     };
 
     const submitAndNew = (e) => {
         e.preventDefault();
         setData('create_and_new', true);
-        post(route('acl.users.store'), {
-            onSuccess: () => {
-                reset();
-            },
-        });
+        post(route('{{ROUTE_PREFIX}}.store'));
     };
 
     return (
         <AppLayout>
-            <Head title="Novo Usuário" />
+            <Head title="Novo {{SINGULAR_NAME}}" />
             <div className="max-w-2xl mx-auto">
                 <Card>
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-4">
-                                Informações Básicas
+                                Novo {{SINGULAR_NAME}}
                             </div>
                         </CardTitle>
-                        <CardDescription></CardDescription>
+                        <CardDescription>
+                            Preencha as informações para criar um novo {{SINGULAR_NAME_LOWER}}
+                        </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={submit}>
-                            <UserForm
+                            <{{MODEL_NAME}}Form
                                 data={data}
                                 setData={setData}
                                 errors={errors}
@@ -101,7 +71,7 @@ export default function CreateUser() {
                             />
 
                             <div className="mt-6 flex justify-between items-center gap-4">
-                                <BackButton backUrl={route('acl.users.index')}></BackButton>
+                                <BackButton backUrl={route('{{ROUTE_PREFIX}}.index')}></BackButton>
                                 <div className="flex gap-3">
                                     <Button
                                         type="button"
@@ -114,7 +84,7 @@ export default function CreateUser() {
                                     </Button>
                                     <Button type="submit" disabled={processing}>
                                         <Save className="w-4 h-4 mr-2" />
-                                        Criar Usuário
+                                        Criar {{SINGULAR_NAME}}
                                     </Button>
                                 </div>
                             </div>

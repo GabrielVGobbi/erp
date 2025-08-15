@@ -1,33 +1,12 @@
 import React from 'react';
-import { Head, useForm, Link, PageProps } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import FormView, { FormSection } from '@/components/app/form-view';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import clsx from 'clsx'
 import { Button } from '@/components/ui/button';
-import UserForm from './user-form';
+import BusinessUnitForm from './business-unit-form';
 import { Save } from 'lucide-react';
 import BackButton from '@/components/ui/back-button';
-
-interface Role {
-    id: number;
-    name: string;
-    slug: string;
-}
-
-interface Permission {
-    id: number;
-    name: string;
-    slug: string;
-    module: string;
-}
-
-interface FormProps extends PageProps {
-    roles: Role[];
-    permissions: Permission[];
-}
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,33 +14,25 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('dashboard'),
     },
     {
-        title: 'ACL',
-        href: '#',
+        title: 'Unidade(s) de Negócio',
+        href: route('business-units.index'),
     },
     {
-        title: 'Usuários',
-        href: route('acl.users.index'),
-    },
-    {
-        title: 'Novo Usuário',
+        title: 'Novo BusinessUnit',
         href: '#',
     },
 ];
 
-export default function CreateUser() {
-
+export default function CreateBusinessUnit() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
         create_and_new: false,
     });
 
     const submit = (e) => {
         e.preventDefault();
         setData('create_and_new', false);
-        post(route('acl.users.store'), {
+        post(route('business-units.store'), {
             onSuccess: () => {
                 reset();
             },
@@ -71,29 +42,32 @@ export default function CreateUser() {
     const submitAndNew = (e) => {
         e.preventDefault();
         setData('create_and_new', true);
-        post(route('acl.users.store'), {
+        post(route('business-units.store'), {
             onSuccess: () => {
                 reset();
             },
         });
     };
 
+
     return (
         <AppLayout>
-            <Head title="Novo Usuário" />
+            <Head title="Nova Unidade(s) de Negócio" />
             <div className="max-w-2xl mx-auto">
                 <Card>
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-4">
-                                Informações Básicas
+                                Nova Unidade(s) de Negócio
                             </div>
                         </CardTitle>
-                        <CardDescription></CardDescription>
+                        <CardDescription>
+                            Preencha as informações para criar um nova Unidade(s) de Negócio
+                        </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={submit}>
-                            <UserForm
+                            <BusinessUnitForm
                                 data={data}
                                 setData={setData}
                                 errors={errors}
@@ -101,7 +75,7 @@ export default function CreateUser() {
                             />
 
                             <div className="mt-6 flex justify-between items-center gap-4">
-                                <BackButton backUrl={route('acl.users.index')}></BackButton>
+                                <BackButton backUrl={route('business-units.index')}></BackButton>
                                 <div className="flex gap-3">
                                     <Button
                                         type="button"
@@ -114,7 +88,7 @@ export default function CreateUser() {
                                     </Button>
                                     <Button type="submit" disabled={processing}>
                                         <Save className="w-4 h-4 mr-2" />
-                                        Criar Usuário
+                                        Criar Unidade
                                     </Button>
                                 </div>
                             </div>

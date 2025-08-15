@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountingEntriesResource;
 use App\Http\Resources\BranchResource;
+use App\Http\Resources\BusinessUnitResource;
 use App\Http\Resources\CostCenterResource;
 use App\Http\Resources\InventoryResource;
 use App\Http\Resources\OrganizationResource;
@@ -12,6 +13,7 @@ use App\Http\Resources\ProjectResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\AccountingEntries;
 use App\Models\Branch;
+use App\Models\BusinessUnit;
 use App\Models\CostCenter;
 use App\Models\Inventory;
 use App\Models\Organization;
@@ -32,6 +34,11 @@ class TablesApiController extends Controller
     // Define a map for available tables, their models, and resources
     // This centralizes all the necessary information
     protected $tableMap = [
+        'business-units' => [
+            'model' => BusinessUnit::class,
+            'resource' => BusinessUnitResource::class,
+            'with' => [],
+        ],
         'purchase-requisitions' => [
             'model' => PurchaseRequisition::class,
             'resource' => PurchaseRequisitionResource::class,
