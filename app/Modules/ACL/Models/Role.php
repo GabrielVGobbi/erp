@@ -35,4 +35,19 @@ class Role extends Model
     {
         return $query->where('slug', '<>', 'dev');
     }
+
+    public function scopeApproves($query)
+    {
+        return $query->whereIn('slug', [
+            'general-manager',
+            'manager',
+            'supervisor',
+            'coordinator'
+        ]);
+    }
+
+    public function scopeUser($query)
+    {
+        return $query->where('name', 'Usuários');
+    }
 }

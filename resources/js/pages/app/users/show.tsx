@@ -172,15 +172,15 @@ export default function ShowUser({ user }: ShowProps) {
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <CardTitle>Roles do Usuário</CardTitle>
+                                        <CardTitle>Função do Usuário</CardTitle>
                                         <CardDescription>
-                                            Roles definem conjuntos de permissões que o usuário possui
+                                            Funções definem conjuntos de permissões que o usuário possui
                                         </CardDescription>
                                     </div>
                                     <Button variant="outline">
                                         <Link className="items-center flex" prefetch href={route('acl.users.roles', user.id)}>
                                             <Settings className="w-4 h-4 mr-2" />
-                                            Gerenciar Roles
+                                            Gerenciar Funções
                                         </Link>
                                     </Button>
                                 </div>

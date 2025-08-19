@@ -11,15 +11,13 @@ class {{ class }}
      */
     public function creating({{ model }} ${{ modelVariable }}): void
     {
-        $this->global($businessUnit);
     }
 
     /**
      * Handle the BusinessUnit "updating" event.
      */
-    public function updating(BusinessUnit $businessUnit): void
+    public function updating({{ model }} ${{ modelVariable }}): void
     {
-        $this->global($businessUnit);
     }
 
     /**

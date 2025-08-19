@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             OrganizationSeeder::class,
             UserSeeder::class,
+            PermissionsSeeder::class,
+            RolesSeeder::class,
+            ApprovalRolesSeeder::class,
             BranchSeeder::class,
             SupplierSeeder::class,
             ChartAccountSeeder::class,
@@ -25,8 +28,8 @@ class DatabaseSeeder extends Seeder
             InventorySeeder::class,
             ProjectSeeder::class,
             InventorySeeder::class,
-            PermissionsSeeder::class,
             BusinessUnitSeeder::class,
+            ApprovalAssignmentsSeeder::class,
         ]);
     }
 }

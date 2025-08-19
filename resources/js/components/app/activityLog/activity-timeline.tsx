@@ -28,8 +28,6 @@ export default function ActivityTimeline({ logs, className = '' }: ActivityTimel
     );
   }
 
-  console.log(logs);
-
   return (
     <div className={`timeline ${className}`}>
       <div className="space-y-4">

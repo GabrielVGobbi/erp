@@ -43,7 +43,7 @@ export default function ManageUserRoles({ user, roles }: ManageRolesProps) {
             href: route('acl.users.show', user.id),
         },
         {
-            title: 'Gerenciar Roles',
+            title: 'Gerenciar Funções',
             href: '#',
         },
     ];
@@ -67,7 +67,7 @@ export default function ManageUserRoles({ user, roles }: ManageRolesProps) {
 
     return (
         <AppLayout>
-            <Head title={`Gerenciar Roles - ${user.name}`} />
+            <Head title={`Gerenciar Funções - ${user.name}`} />
 
             <div className="max-w-4xl mx-auto space-y-6">
                 {/* Header */}
@@ -81,7 +81,7 @@ export default function ManageUserRoles({ user, roles }: ManageRolesProps) {
                                 </React.Fragment>
                             ))}
                         </div>
-                        <h1 className="text-2xl font-bold text-gray-900">Gerenciar Roles</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">Gerenciar Funções</h1>
                         <p className="text-gray-600">{user.name} • {user.email}</p>
                     </div>
                     <Button

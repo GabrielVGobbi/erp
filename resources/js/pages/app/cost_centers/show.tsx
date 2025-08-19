@@ -16,6 +16,7 @@ import {
     Copy
 } from 'lucide-react';
 import FormView from '@/components/app/form-view';
+import ApprovalHierarchy from '@/components/app/approval-hierarchy';
 
 interface CostCenter {
     id: number;
@@ -41,7 +42,7 @@ interface ShowProps extends PageProps {
     activities?: ActivityItem[];
 }
 
-const CostCenterShow: React.FC<ShowProps> = ({ costCenterData, activities = [] }) => {
+const CostCenterShow: React.FC<ShowProps> = ({ costCenterData, activities = [], approvalAssignments }) => {
     const costCenter = costCenterData.data;
     //const organizations = organizationsData.data;
 
@@ -82,6 +83,8 @@ const CostCenterShow: React.FC<ShowProps> = ({ costCenterData, activities = [] }
         }
     ];
 
+
+
     return (
         <AppLayout>
             <Head title={`Centro de Custo - ${costCenter.name}`} />
@@ -100,8 +103,17 @@ const CostCenterShow: React.FC<ShowProps> = ({ costCenterData, activities = [] }
                         label: costCenter.deleted_at ? 'Inativo' : 'Ativo',
                         variant: costCenter.deleted_at ? 'destructive' : 'default'
                     }}
-
                 />
+
+                <div className="mt-5">
+                    <ApprovalHierarchy
+                        assignments={approvalAssignments.data}
+                        onManage={() => {
+                            router.visit(route('cost-centers.approvers', costCenter.id));
+                        }}
+                    />
+                </div>
+
             </div>
 
         </AppLayout>

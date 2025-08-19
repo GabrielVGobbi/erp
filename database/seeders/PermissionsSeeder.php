@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Modules\ACL\Models\Permission;
+use App\Modules\ACL\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,9 @@ class PermissionsSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
+            //Painel
+            ['name' => 'Acesso ao painel', 'group' => 'Painel'],
+
             // Grupo Usuários
             ['name' => 'Visualizar Usuários', 'slug' => 'users.view', 'group' => 'Users'],
             ['name' => 'Criar Usuários', 'slug' => 'users.create', 'group' => 'Users'],
@@ -26,66 +31,20 @@ class PermissionsSeeder extends Seeder
             ['name' => 'Criar Funções', 'slug' => 'roles.create', 'group' => 'ACL'],
             ['name' => 'Editar Funções', 'slug' => 'roles.edit', 'group' => 'ACL'],
             ['name' => 'Excluir Funções', 'slug' => 'roles.delete', 'group' => 'ACL'],
-
             ['name' => 'Visualizar Permissões', 'slug' => 'permissions.view', 'group' => 'ACL'],
             ['name' => 'Criar Permissões', 'slug' => 'permissions.create', 'group' => 'ACL'],
             ['name' => 'Editar Permissões', 'slug' => 'permissions.edit', 'group' => 'ACL'],
             ['name' => 'Excluir Permissões', 'slug' => 'permissions.delete', 'group' => 'ACL'],
+
+            // Requisição de Compra
+            ['name' => 'Realizar Requisição de Compra', 'group' => 'Requisição de Material'],
         ];
 
         foreach ($permissions as $permission) {
-            \App\Modules\ACL\Models\Permission::firstOrCreate(
-                ['slug' => $permission['slug']],
+            Permission::firstOrCreate(
+                ['name' => $permission['name']],
                 $permission
             );
         }
-
-        $devRole = \App\Modules\ACL\Models\Role::firstOrCreate(
-            ['slug' => 'developer'],
-            ['name' => 'Developer']
-        );
-
-        // Criar roles básicas
-        $adminRole = \App\Modules\ACL\Models\Role::firstOrCreate(
-            ['slug' => 'admin'],
-            ['name' => 'Administrador']
-        );
-
-        $userRole = \App\Modules\ACL\Models\Role::firstOrCreate(
-            ['slug' => 'user'],
-            ['name' => 'Usuário']
-        );
-
-        DB::table('roles')->insert([
-            [
-                'name' => 'Supervisor',
-                'slug' => 'supervisor',
-            ],
-            [
-                'name' => 'Coordenador',
-                'slug' => 'coordinator',
-            ],
-            [
-                'name' => 'Gerente',
-                'slug' => 'manager',
-            ],
-            [
-                'name' => 'Gerente Geral',
-                'slug' => 'general-manager',
-            ],
-        ]);
-
-
-        // Atribuir todas as permissões ao admin
-        $allPermissions = \App\Modules\ACL\Models\Permission::all();
-        $adminRole->permissions()->sync($allPermissions->pluck('id'));
-        $devRole->permissions()->sync($allPermissions->pluck('id'));
-
-        $developer = User::first();
-        if ($developer) {
-            $developer->roles()->syncWithoutDetaching([$adminRole->id]);
-        }
-
-        User::first()->roles()->attach($devRole);
     }
 }

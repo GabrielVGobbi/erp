@@ -36,9 +36,14 @@ export default function PageHeader({
                                     <ChevronRight className="w-4 h-4 mx-2 text-gray-400" />
                                 )}
                                 {index === breadcrumbs.length - 1 ? (
-                                    <span className="text-gray-900 font-medium">
-                                        {breadcrumb.title}
-                                    </span>
+                                    <>
+                                        <span className="text-gray-900 font-medium">
+                                            {breadcrumb.title}
+                                        </span>
+
+                                    </>
+
+
                                 ) : (
                                     <Link
                                         href={breadcrumb.href}
@@ -59,6 +64,8 @@ export default function PageHeader({
                     <h1 className="text-2xl font-bold text-gray-900">
                         {title}
                     </h1>
+
+
                     {description && (
                         <p className="text-gray-600 mt-1">
                             {description}

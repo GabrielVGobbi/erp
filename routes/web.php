@@ -38,6 +38,10 @@ Route::middleware([MultiAuthMiddleware::class])->group(function () {
     Route::resource('purchase-requisitions', PurchaseRequisitionController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('business-units', BusinessUnitController::class);
+    #Route::resource('products', ProductController::class);
+
+    Route::get('cost-centers/{costCenterId}/manage-approvers', [CostCenterController::class, 'manageApprovers'])->name('cost-centers.approvers');
+    Route::post('cost-centers/{costCenterId}/manage-approvers/update', [CostCenterController::class, 'updateManageApprovers'])->name('cost-centers.approvers.update');
 
     Route::name('table.')->prefix('tables/')->group(
         function () {
@@ -52,6 +56,3 @@ Route::middleware([MultiAuthMiddleware::class])->group(function () {
 require __DIR__ . '/settings.php';
 require __DIR__ . '/acl.php';
 require __DIR__ . '/auth.php';
-
-Route::resource('products', 'ProductController');
-

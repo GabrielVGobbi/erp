@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use App\Models\BusinessUnit;
+use App\Models\CostCenter;
+use App\Models\User;
 use App\Observers\BusinessUnitObserver;
+use App\Observers\ContextObserver;
+use App\Observers\UserObserver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -40,5 +44,7 @@ class AppServiceProvider extends ServiceProvider
     private function registerObservers(): void
     {
         BusinessUnit::observe(BusinessUnitObserver::class);
+        CostCenter::observe(ContextObserver::class);
+        User::observe(UserObserver::class);
     }
 }

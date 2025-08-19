@@ -2,6 +2,7 @@
 
 namespace App\Modules\Compras\Models;
 
+use App\Models\ApprovalAssignment;
 use App\Models\User;
 use App\Modules\Compras\Supports\Enums\PurchaseCategory;
 use App\Modules\Compras\Supports\Enums\Purchases\PurchaseRequisitionStatus;
@@ -60,6 +61,14 @@ class PurchaseRequisition extends Model
     }
 
     protected $appends = ['OrderBadge'];
+
+    /**
+     * Pega todos os aprovadores dessa requisição
+     */
+    public function approvers()
+    {
+        return $this->morphMany(ApprovalAssignment::class, 'context');
+    }
 
     public function requisitor()
     {

@@ -33,8 +33,6 @@ trait HasPermissionsTrait
 
     public function hasPermissionTo($permission)
     {
-        dd(config('permissions.developer_role', 'developer'));
-
         if (auth()->user()->hasRole(config('permissions.developer_role', 'developer'))) {
             return true;
         }

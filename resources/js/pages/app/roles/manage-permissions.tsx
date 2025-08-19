@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Settings, Save, X, ArrowLeft, Search, Shield } from 'lucide-react';
+import PageHeader from '@/components/app/page-header';
 
 interface Permission {
     id: number;
@@ -119,18 +120,24 @@ export default function ManageRolePermissions({ role, permissions }: ManagePermi
         <AppLayout>
             <Head title={`Gerenciar Permissões - ${role.name}`} />
 
+
+            <PageHeader
+                title="Roles"
+                description=""
+                breadcrumbs={breadcrumbs}
+                addButton={
+                    {
+                        label: 'Nova Função',
+                        href: route('acl.roles.create'),
+                    }
+                }
+            />
+
             <div className="max-w-6xl mx-auto space-y-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <div className="flex items-center space-x-2 text-sm text-gray-500 mb-2">
-                            {breadcrumbs.map((item, index) => (
-                                <React.Fragment key={index}>
-                                    {index > 0 && <span>/</span>}
-                                    <span>{item.title}</span>
-                                </React.Fragment>
-                            ))}
-                        </div>
+
                         <h1 className="text-2xl font-bold text-gray-900">Gerenciar Permissões</h1>
                         <div className="flex items-center space-x-2">
                             <Shield className="w-4 h-4 text-blue-600" />

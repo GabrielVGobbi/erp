@@ -14,7 +14,7 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Project_' . self::$counter++,
+            'name' => 'Projeto ' . self::$counter++,
         ];
     }
 }

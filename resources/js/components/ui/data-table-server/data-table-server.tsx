@@ -329,8 +329,6 @@ export function DataTableServer<TData, TValue>({
 
             const responseData = await response.json();
 
-            console.log(responseData);
-
             // Transformar a resposta se necessário ou usar o formato padrão
             const { data: tableData, meta } = transformResponse
                 ? transformResponse(responseData)

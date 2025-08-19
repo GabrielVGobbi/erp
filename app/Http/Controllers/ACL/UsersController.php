@@ -179,7 +179,7 @@ class UsersController extends Controller
         $user->roles()->sync($request->roles ?? []);
 
         return redirect()->route('acl.users.show', $user)
-            ->with('success', 'Roles do usuário atualizadas com sucesso.');
+            ->with('success', 'Função do usuário atualizadas com sucesso.');
     }
 
     /**
